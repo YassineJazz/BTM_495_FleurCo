@@ -1,0 +1,252 @@
+using System;
+using System.Collections.Generic;
+
+public class Product
+{
+    public int ProductId { get; set; }
+    public string ProductName { get; set; }
+    public int Quantity { get; set; }
+    public decimal Price { get; set; }
+    public decimal ProductCost {get;set;}
+    public string ProductCategory{get;set;}
+
+    public Product(int productId, string productName, int quantity, decimal price, decimal productcost, string productcategory)
+    {
+        ProductId = productId;
+        ProductName = productName;
+        Quantity = quantity;
+        Price = price;
+        ProductCost = productcost;
+        ProductCategory = productcategory;
+    }
+    public void AddOrder()
+    {
+        
+    }
+
+    
+}
+
+
+
+public class Order
+{
+
+  public int OrderID{get;set;}
+  public List<Product> Products {get;set;}
+  public string OrderType{get;set;}
+  public string OrderStatus{get;set;}
+  public decimal OrderTotal{get;set;}  
+
+  public Order(int orderid, List<Product> products, string ordertype, string orderstatus){
+    OrderID = orderid;
+    Products = products;
+    OrderType = ordertype;
+    OrderStatus = orderstatus;
+    CalculateOrderTotal();
+
+void CalculateOrderTotal()
+      {
+          decimal total = 0;
+
+          foreach (var product in Products)
+          {
+              total += product.Price * product.Quantity;
+          }
+
+          OrderTotal = total;  
+      }
+    }
+  public void DisplayCustomerOrder()
+    {
+        
+    Console.WriteLine($"Order number : {OrderID} of type {OrderType}. Consists of :");
+      foreach (var product in Products)
+      {
+          Console.WriteLine($"- Product: {product.ProductName}, Quantity: {product.Quantity}, Price: {product.Price:C}");
+      }
+        Console.WriteLine($"This order is currently {OrderStatus}");
+        foreach(var product in Products){
+           
+        
+            }
+        Console.WriteLine($"The order total is : {OrderTotal:C}");
+  }
+    public void RemoveProduct()
+    {
+        
+    }
+    public void AddtoCart()
+    {
+        
+    }
+    public void ConfirmOrder()
+    {
+        
+    }
+    public void CancelOrder()
+    {
+        
+    }
+}
+public class Invoice
+{
+    public int InvoiceID {get;set;}
+    public decimal TotalPrice {get;set;}
+    public DateTime Date {get;set;}
+    public int OrderID {get;set;}
+
+    public Invoice(int invoiceid, decimal totalprice, DateTime date, int orderid)
+    {
+        InvoiceID = invoiceid;
+        TotalPrice = totalprice;
+        Date = date;
+        OrderID = orderid;
+    }
+    public void PrintInvoice()
+    {
+        
+    }
+    
+}
+public class User
+{
+    public string FirstName {get;set;}
+    public string LastName {get;set;}
+    public string Email {get;set;}
+    public string MainPhoneNumber {get;set;}
+
+    public User(string firstname, string lastname, string email, string mainphonenumber)
+    {
+    FirstName = firstname;
+    LastName = lastname;
+    Email = email;
+    MainPhoneNumber = mainphonenumber;
+    }
+}
+public class WHManager : User
+{
+    public int WHManagerID {get;set;}
+
+    public WHManager(int whmanagerid, string firstname, string lastname, string email, string mainphonenumber)
+    :base ( firstname,  lastname,  email, mainphonenumber){
+        WHManagerID = whmanagerid;
+    }
+    public void PlaceBackOrder()
+    {
+        
+    }
+    public void AddNewProduct()
+    {
+        
+    }
+    public void ModifyProduct()
+    {
+        
+    }
+    public void RemoveProduct()
+    {
+        
+    }
+    public void SearchProduct()
+    {
+        
+    }
+    public void ConfirmOrderInvoice()
+    {
+        
+    }
+    public void ModifyOrderInvoice()
+    {
+        
+    }
+    public void CancelOrderInvoiceSelection()
+    {
+        
+    }
+    public void ScanItemCode()
+    {
+        
+    }
+    public void InputItemCode()
+    {
+        
+    }
+    public void GenerateSalesForecast()
+    {
+        
+    }
+}
+public class WHWorker : User
+{
+    public int WHWorkerID {get;set;}
+
+    public WHWorker(int whworkerid, string firstname, string lastname, string email, string mainphonenumber)
+    :base ( firstname,  lastname,  email, mainphonenumber){
+        WHWorkerID = whworkerid;
+        }
+    public void ConfirmOrderInvoice()
+    {
+        
+    }
+    public void ModifyOrderInvoice()
+    {
+        
+    }
+    public void CancelOrderInvoiceSelection()
+    {
+        
+    }
+    public void ScanItemCode()
+    {
+        
+    }
+    public void InputItemCode()
+    {
+        
+    }
+    
+}
+public class Customer : User
+{
+    public int CustomerID {get;set;}
+    public string FaxNumber{get;set;}
+
+    public Customer(int customerid, string firstname, string lastname, string email, string mainphonenumber, string faxnumber)
+    :base ( firstname,  lastname,  email, mainphonenumber){
+        CustomerID = customerid;
+        FaxNumber = faxnumber;
+        }
+    public void PlaceNewOrder()
+    {
+        
+    }
+}
+public class NewOrder : Order 
+{
+    public int CustomerID {get; set;}
+    public decimal SellingPrice {get; set;}
+    public int WorkerID {get; set;}
+
+    public NewOrder(int customerid, decimal sellingprice, int workerid, int orderid, List<Product> products, string ordertype, string orderstatus): 
+    base (orderid, products, ordertype, orderstatus)
+    {
+        CustomerID = customerid;
+        SellingPrice = sellingprice;
+        WorkerID = workerid;
+    }
+}
+
+public class BackOrder : Order
+{
+    public int WHManagerID {get; set;}
+    public decimal TotalCost{get; set;}
+
+    public BackOrder (int whmanagerid, decimal totalcost, int orderid, List<Product> products, string ordertype, string orderstatus) : 
+    base(orderid, products, ordertype, orderstatus)
+    {
+        WHManagerID = whmanagerid;
+        TotalCost = totalcost;
+
+    }
+}
