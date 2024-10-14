@@ -242,11 +242,22 @@ public class BackOrder : Order
     public int WHManagerID {get; set;}
     public decimal TotalCost{get; set;}
 
-    public BackOrder (int whmanagerid, decimal totalcost, int orderid, List<Product> products, string ordertype, string orderstatus) : 
+    public BackOrder (int whmanagerid, int orderid, List<Product> products, string ordertype, string orderstatus) : 
     base(orderid, products, ordertype, orderstatus)
     {
         WHManagerID = whmanagerid;
-        TotalCost = totalcost;
+        CalculateTotalCost();
+void CalculateTotalCost()
+        {
+              decimal totalcost = 0;
 
+              foreach (var product in Products)
+              {
+                  totalcost += product.ProductCost * product.Quantity;
+              }
+
+              TotalCost = totalcost;  
+        }
     }
+
 }
