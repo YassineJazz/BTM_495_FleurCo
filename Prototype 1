@@ -1,5 +1,58 @@
 using System;
 using System.Collections.Generic;
+public class FleurCoSystem
+{
+    public List<Order> Orders {get;set;}
+    public List<Invoice> Invoices {get;set;}
+    public string ConfirmationMessages {get;set;}
+    public string ProductCategory {get;set;}
+    public DateTime TimeFrame {get;set;}
+    public int ForecastStockLevel {get;set;}
+    public Order CurrentOrder {get;set;}
+
+    public FleurCoSystem()
+    {
+     
+    }
+    public void DisplaySalesForecast()
+    {
+        
+    }
+    public void DisplayInventory()
+    {
+        
+    }
+    public void DisplayCriteria()
+    {
+        
+    }
+    public void DisplayCustomerOrder()
+    {
+        
+    }
+    public void DisplayOrderList()
+    {
+        
+    }
+    public void DisplayOrderOverview()
+    {
+        
+    }
+    public void DisplayConfirmationMessage()
+    {
+        
+    }
+    public void PrintInvoice()
+    {
+        
+    }
+    public void AskConfirmation()
+    {
+        
+    }
+
+    
+}
 
 public class Product
 {
