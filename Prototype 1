@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
+
 public class FleurCoSystem
 {
     public List<Order> Orders {get;set;}
@@ -10,9 +12,15 @@ public class FleurCoSystem
     public int ForecastStockLevel {get;set;}
     public Order CurrentOrder {get;set;}
 
-    public FleurCoSystem()
+    public FleurCoSystem(List<Order> orders, List<Invoice> invoices, string confirmationmessages, string productcategory, DateTime timeframe, int forecaststocklevel, Order currentorder)
     {
-     
+     Orders = orders;
+     Invoices = invoices;
+     ConfirmationMessages = confirmationmessages;
+     ProductCategory = productcategory;
+     TimeFrame = timeframe;
+     ForecastStockLevel = forecaststocklevel;
+     CurrentOrder = currentorder;
     }
     public void DisplaySalesForecast()
     {
@@ -20,7 +28,7 @@ public class FleurCoSystem
     }
     public void DisplayInventory()
     {
-        
+     
     }
     public void DisplayCriteria()
     {
@@ -63,14 +71,14 @@ public class Product
     public decimal ProductCost {get;set;}
     public string ProductCategory{get;set;}
 
-    public Product(int productId, string productName, int quantity, decimal price, decimal productcost, string productcategory)
+    public Product(int productId, string productName, int quantity, decimal price, decimal productCost, string productCategory)
     {
         ProductId = productId;
         ProductName = productName;
         Quantity = quantity;
         Price = price;
-        ProductCost = productcost;
-        ProductCategory = productcategory;
+        ProductCost = productCost;
+        ProductCategory = productCategory;
     }
     public void AddOrder()
     {
@@ -80,7 +88,41 @@ public class Product
     
 }
 
+public class Inventory 
+{
 
+    public List<Product> Products {get;set;}
+
+    public Inventory()
+    {
+        Products = new List<Product>();
+    }
+
+    public void DisplayInventory()
+    {
+        foreach (Product product in Products)
+        {
+            Console.WriteLine($"ID:{product.ProductId}, Name: {product.ProductName}, Quantity: {product.Quantity}, Price: {product.Price}, Cost: {product.ProductCost} Category: {product.ProductCategory}");
+        }
+    }
+
+      public void AddNewProduct(Product product)
+     {
+        
+        Products.Add(product);
+     
+    }
+     
+    public void ModifyProduct()
+    {
+        
+    }
+    public void RemoveProduct()
+    {
+        
+    }
+
+}
 
 public class Order
 {
@@ -191,7 +233,7 @@ public class WHManager : User
     }
     public void AddNewProduct()
     {
-        
+       
     }
     public void ModifyProduct()
     {
