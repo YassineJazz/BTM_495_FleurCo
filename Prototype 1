@@ -185,6 +185,23 @@ void CalculateOrderTotal()
         
     }
 }
+//public class OrderProduct
+{
+  public int OrderID {get;set;}
+  public int ProductID {get;set;}
+  public string ProductName {get;set;}
+  public int ProductQuantity {get;set;}
+  public decimal ProductPrice {get;set;}
+
+  public OrderProduct(int orderid, int productid, string productname, int productquantity, decimal productprice)
+  {
+    OrderID = orderid;
+    ProductID = productid;
+    ProductName = productname;
+    ProductQuantity = productquantity;
+    ProductPrice = productprice;
+  }
+//}
 public class Invoice
 {
     public int InvoiceID {get;set;}
