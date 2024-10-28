@@ -1,0 +1,4 @@
+C:\Users\olipe\Desktop\BTM 495 CODE\ConsoleApp\obj\Debug\net7.0\ConsoleApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\olipe\Desktop\BTM 495 CODE\ConsoleApp\obj\Debug\net7.0\ConsoleApp.AssemblyInfoInputs.cache
+C:\Users\olipe\Desktop\BTM 495 CODE\ConsoleApp\obj\Debug\net7.0\ConsoleApp.AssemblyInfo.cs
+C:\Users\olipe\Desktop\BTM 495 CODE\ConsoleApp\obj\Debug\net7.0\ConsoleApp.csproj.CoreCompileInputs.cache

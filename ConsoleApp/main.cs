@@ -6,18 +6,18 @@ public class FleurCoSystem
 {
     public List<Order> Orders {get;set;}
     public List<Invoice> Invoices {get;set;}
-    public List <Product> Products {get;set;}
+    public Inventory Inventory {get;set;}
     public string ConfirmationMessages {get;set;}
     public string ProductCategory {get;set;}
     public DateTime TimeFrame {get;set;}
     public int ForecastStockLevel {get;set;}
     public Order CurrentOrder {get;set;}
 
-    public FleurCoSystem(List<Order> orders, List<Invoice> invoices, List<Product> products, string confirmationmessages, string productcategory, DateTime timeframe, int forecaststocklevel, Order currentorder)
+    public FleurCoSystem(List<Order> orders, List<Invoice> invoices, Inventory inventory, string confirmationmessages, string productcategory, DateTime timeframe, int forecaststocklevel, Order currentorder)
     {
      Orders = orders;
      Invoices = invoices;
-     Products = products;
+     Inventory = inventory;
      ConfirmationMessages = confirmationmessages;
      ProductCategory = productcategory;
      TimeFrame = timeframe;
@@ -88,7 +88,7 @@ public class FleurCoSystem
   
         public void DisplayInventory()
     {
-        foreach (Product product in Products)
+        foreach (Product product in Inventory.Products)
         {
             Console.WriteLine($"ID:{product.ProductId}, Name: {product.ProductName}, Quantity: {product.Quantity}, Price: {product.Price}, Cost: {product.ProductCost} Category: {product.ProductCategory}");
         }
