@@ -41,7 +41,7 @@ CREATE TABLE Orders (
     order_id INTEGER PRIMARY KEY AUTOINCREMENT,
     order_type TEXT,
     order_status TEXT,
-    order_total REAL,
+    order_total REAL
 );
 
 CREATE TABLE NewOrders (
@@ -54,11 +54,12 @@ CREATE TABLE NewOrders (
 );
 
 CREATE TABLE BackOrders (
+  backorder_id INTEGER,
     whm_id INTEGER,
     user_id INTEGER,
     backorder_cost REAL,
      FOREIGN KEY (whm_id) REFERENCES Users(user_id),
-    FOREIGN KEY (order_id) REFERENCES Orders(order_id)
+    FOREIGN KEY (backorder_id) REFERENCES Orders(order_id)
 );
 
 CREATE TABLE Products (
@@ -73,7 +74,7 @@ CREATE TABLE Products (
 CREATE TABLE OrderProducts (
     order_id INTEGER,
     product_id INTEGER,
-    product_qty INTEGER,,
+    product_qty INTEGER,
     FOREIGN KEY (order_id) REFERENCES Orders(order_id),
     FOREIGN KEY (product_id) REFERENCES Products(product_id)
 );
