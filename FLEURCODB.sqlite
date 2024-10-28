@@ -3,7 +3,8 @@ PRAGMA foreign_keys = ON;
 
 CREATE TABLE Users (
     user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
+    first_name TEXT,
+    last_name TEXT,
     email TEXT,
     main_phone_number TEXT
 );
@@ -72,9 +73,7 @@ CREATE TABLE Products (
 CREATE TABLE OrderProducts (
     order_id INTEGER,
     product_id INTEGER,
-    product_qty INTEGER,
-    email TEXT,
-    main_phone_number TEXT,
+    product_qty INTEGER,,
     FOREIGN KEY (order_id) REFERENCES Orders(order_id),
     FOREIGN KEY (product_id) REFERENCES Products(product_id)
 );

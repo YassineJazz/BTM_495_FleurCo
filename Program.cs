@@ -376,14 +376,12 @@ public class Customer : User
 public class NewOrder : Order 
 {
     public int CustomerID {get; set;}
-    public decimal SellingPrice {get; set;}
     public int WorkerID {get; set;}
 
-    public NewOrder(int customerid, decimal sellingprice, int workerid, int orderid, List<Product> products, string ordertype, string orderstatus): 
+    public NewOrder(int customerid, int workerid, int orderid, List<Product> products, string ordertype, string orderstatus): 
     base (orderid, products, ordertype, orderstatus)
     {
         CustomerID = customerid;
-        SellingPrice = sellingprice;
         WorkerID = workerid;
     }
 }
