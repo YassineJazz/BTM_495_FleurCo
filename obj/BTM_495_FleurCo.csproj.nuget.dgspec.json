@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\olipe\\Desktop\\BTM_495_FleurCo\\ConsoleApp\\ConsoleApp.csproj": {}
+    "C:\\Users\\olipe\\Desktop\\BTM_495_FleurCo\\BTM_495_FleurCo.csproj": {}
   },
   "projects": {
-    "C:\\Users\\olipe\\Desktop\\BTM_495_FleurCo\\ConsoleApp\\ConsoleApp.csproj": {
+    "C:\\Users\\olipe\\Desktop\\BTM_495_FleurCo\\BTM_495_FleurCo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\olipe\\Desktop\\BTM_495_FleurCo\\ConsoleApp\\ConsoleApp.csproj",
-        "projectName": "ConsoleApp",
-        "projectPath": "C:\\Users\\olipe\\Desktop\\BTM_495_FleurCo\\ConsoleApp\\ConsoleApp.csproj",
+        "projectUniqueName": "C:\\Users\\olipe\\Desktop\\BTM_495_FleurCo\\BTM_495_FleurCo.csproj",
+        "projectName": "BTM_495_FleurCo",
+        "projectPath": "C:\\Users\\olipe\\Desktop\\BTM_495_FleurCo\\BTM_495_FleurCo.csproj",
         "packagesPath": "C:\\Users\\olipe\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\olipe\\Desktop\\BTM_495_FleurCo\\ConsoleApp\\obj\\",
+        "outputPath": "C:\\Users\\olipe\\Desktop\\BTM_495_FleurCo\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -22,15 +22,15 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net7.0"
+          "net8.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net7.0": {
-            "targetAlias": "net7.0",
+          "net8.0": {
+            "targetAlias": "net8.0",
             "projectReferences": {}
           }
         },
@@ -46,8 +46,8 @@
         }
       },
       "frameworks": {
-        "net7.0": {
-          "targetAlias": "net7.0",
+        "net8.0": {
+          "targetAlias": "net8.0",
           "imports": [
             "net461",
             "net462",
@@ -59,30 +59,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[7.0.20, 7.0.20]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[7.0.20, 7.0.20]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[7.0.20, 7.0.20]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[7.0.20, 7.0.20]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
