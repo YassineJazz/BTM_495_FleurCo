@@ -1,0 +1,98 @@
+-- Enable foreign key constraint enforcement
+PRAGMA foreign_keys = ON;
+
+CREATE TABLE Users (
+    user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    email TEXT,
+    main_phone_number TEXT
+);
+
+CREATE TABLE WarehouseManagers (
+    user_id INTEGER,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+);
+
+CREATE TABLE WarehouseWorkers (
+    user_id INTEGER,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+);
+
+CREATE TABLE Customers (
+    user_id INTEGER,
+    fax_number TEXT,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+);
+
+CREATE TABLE Addresses (
+    address_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    street TEXT,
+    municipality TEXT,
+    province TEXT,
+    country TEXT,
+    postal_code TEXT,
+    address_type TEXT,
+    user_id INTEGER,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+);
+
+CREATE TABLE Orders (
+    order_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    order_type TEXT,
+    order_status TEXT,
+    order_total REAL,
+    user_id INTEGER,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+);
+
+CREATE TABLE NewOrders (
+    order_id INTEGER,
+    user_id INTEGER,
+    neworder_price REAL,
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id),
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+);
+
+CREATE TABLE BackOrders (
+    order_id INTEGER,
+    user_id INTEGER,
+    backorder_cost REAL,
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id),
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+);
+
+CREATE TABLE Products (
+    product_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_name TEXT,
+    product_category TEXT,
+    product_type TEXT,
+    product_price REAL,
+    product_cost REAL
+);
+
+CREATE TABLE OrderProducts (
+    order_id INTEGER,
+    product_id INTEGER,
+    product_qty INTEGER,
+    email TEXT,
+    main_phone_number TEXT,
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id),
+    FOREIGN KEY (product_id) REFERENCES Products(product_id)
+);
+
+CREATE TABLE Invoices (
+    invoice_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    total_price REAL,
+    invoice_date DATE,
+    order_id INTEGER,
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id)
+);
+
+CREATE TABLE SalesForecasts (
+    forecast_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    start_date DATE,
+    end_date DATE,
+    forecast_stock_level INTEGER,
+    product_id INTEGER,
+    FOREIGN KEY (product_id) REFERENCES Products(product_id)
+);
