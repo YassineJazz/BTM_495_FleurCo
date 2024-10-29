@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BTM_495_FleurCo")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f32a61601607183ca8494aac96f7b5e3596ca9fb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c23da792f52b731a2d6790c908a8acefadd348b4")]
 [assembly: System.Reflection.AssemblyProductAttribute("BTM_495_FleurCo")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BTM_495_FleurCo")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
