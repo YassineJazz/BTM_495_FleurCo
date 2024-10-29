@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
+using System.Net.Http.Headers;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography.X509Certificates;
 public class FleurCoSystem
@@ -8,20 +10,16 @@ public class FleurCoSystem
     public List<Invoice> Invoices {get;set;}
     public Inventory Inventory {get;set;}
     public string ConfirmationMessages {get;set;}
-    public string ProductCategory {get;set;}
-    public DateTime TimeFrame {get;set;}
-    public int ForecastStockLevel {get;set;}
+    public SalesForecast SalesForecast {get; set;}
     public Order CurrentOrder {get;set;}
 
-    public FleurCoSystem(List<Order> orders, List<Invoice> invoices, Inventory inventory, string confirmationmessages, string productcategory, DateTime timeframe, int forecaststocklevel, Order currentorder)
+    public FleurCoSystem(List<Order> orders, List<Invoice> invoices, Inventory inventory, string confirmationmessages, SalesForecast salesforecast, Order currentorder)
     {
      Orders = orders;
      Invoices = invoices;
      Inventory = inventory;
      ConfirmationMessages = confirmationmessages;
-     ProductCategory = productcategory;
-     TimeFrame = timeframe;
-     ForecastStockLevel = forecaststocklevel;
+     SalesForecast = salesforecast;
      CurrentOrder = currentorder;
     }
     public void DisplaySalesForecast()
@@ -96,6 +94,19 @@ public class FleurCoSystem
     
 
     
+}
+public class SalesForecast 
+{
+    public DateTime TimeFrame {get; set;}
+    public int ForecastStockLevel {get; set;}
+    public string ProductCategory {get; set;}
+
+    public SalesForecast (DateTime timeframe, int forecaststocklevel, string productcategory)
+    {
+        TimeFrame = timeframe;
+        ForecastStockLevel = forecaststocklevel;
+        ProductCategory = productcategory;
+    }
 }
 
 public class Product
