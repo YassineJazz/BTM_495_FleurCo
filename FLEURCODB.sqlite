@@ -71,6 +71,12 @@ CREATE TABLE Products (
     product_cost REAL
 );
 
+CREATE TABLE Inventory ( 
+    product_id,
+    product_qty,
+    FOREIGN KEY (product_id) REFERENCES Products(product_id)
+    );
+    
 CREATE TABLE OrderProducts (
     order_id INTEGER,
     product_id INTEGER,
