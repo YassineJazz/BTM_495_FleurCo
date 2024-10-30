@@ -1,9 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Net.Http.Headers;
-using System.Reflection.Metadata.Ecma335;
-using System.Security.Cryptography.X509Certificates;
 public class FleurCoSystem
 {
     public List<Order> Orders {get;set;}
