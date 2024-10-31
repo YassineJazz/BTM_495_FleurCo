@@ -16,66 +16,12 @@ public class FleurCoSystem
      SalesForecast = salesforecast;
      CurrentOrder = currentorder;
     }
-    public void RequestForecast()
+    public void DisplayInventory()
     {
-
-    }
-    public void SelectForecastCriteria()
-    {
-        
-    }
-    public void GetSalesForecast()
-    {
-        
-    }
-  
-    public void DisplayCriteria()
-    {
-        
-    }
-    public void DisplayCustomerOrder()
-    {
-        
-    }
-    public void DisplayOrderList()
-    {
-        
-    }
-    public void DisplayOrderOverview()
-    {
-        
-    }
-    public void DisplayConfirmationMessage()
-    {
-        
-    }
-    public void PrintInvoice()
-    {
-        
-    }
-    public void AskConfirmation()
-    {
-        
-    }
-      public void SelectOrder()
-    {
-        
-    }
-    public void ConfirmPrint()
-    {
-        
-    }
-    public void CreateNewProduct()
-    {
-
-    }
-    public void ModifyProduct()
-    {
-        
-    }
-    public void RemoveProduct()
-    {
-        
+        foreach (Product product in Inventory.Products)
+        {
+            Console.WriteLine($"ID:{product.ProductId}, Name: {product.ProductName}, Quantity: {product.Quantity}, Price: {product.Price}, Cost: {product.ProductCost} Category: {product.ProductCategory}");
+        }
     }
     public void SearchProduct()
     {
@@ -86,13 +32,59 @@ public class FleurCoSystem
         
     }
   
-        public void DisplayInventory()
+    public void CreateNewProduct()
     {
-        foreach (Product product in Inventory.Products)
-        {
-            Console.WriteLine($"ID:{product.ProductId}, Name: {product.ProductName}, Quantity: {product.Quantity}, Price: {product.Price}, Cost: {product.ProductCost} Category: {product.ProductCategory}");
-        }
+        
     }
+    public void ModifyProduct()
+    {
+        
+    }
+    public void RemoveProduct()
+    {
+        
+    }
+    public void RequestForecast()
+    {
+        
+    }
+    public void SelectForecastCriteria()
+    {
+        
+    }
+    public void GetSalesForecast()
+    {
+        
+    }
+    public void ReadItemCode()
+    {
+        
+    }
+      public void DisplayOrderList()
+    {
+        
+    }
+    public void SelectOrder()
+    {
+        
+    }
+    public void PrintInvoice()
+    {
+
+    }
+    public void AskConfirmation()
+    {
+        
+    }
+    public void ConfirmPrint()
+    {
+        
+    }
+    public void CreateBackOrder()
+    {
+        
+    }
+        
     
 
     
@@ -112,11 +104,13 @@ public class SalesForecast
         ForecastHistory = forecasthistory;
     }
 
-    public void DisplayForecastedLevel(){
+    public void DisplayForecastedLevel()
+    {
 
     }
 
-    public void SaveForecast(){
+    public void SaveForecast()
+    {
 
     }
 }
@@ -140,10 +134,6 @@ public class Product
         ProductCost = productCost;
         ProductCategory = productCategory;
     }
-    public void AddOrder()
-    {
-        
-    }
     public void ConfirmAdd()
     {
 
@@ -164,7 +154,7 @@ public class Inventory
 
     public List<Product> Products {get;set;}
 
-    public Inventory()
+    public int ProductQty {get;set;}
     {
         Products = new List<Product>();
     }
@@ -186,11 +176,18 @@ public class Inventory
         
     }
     
-    public void GetHistoricalLevel()
+    public void IncreaseProductQty()
     {
 
     }
-
+    public void DecreaseProdQty()
+    {
+        
+    }
+    public void RetrieveItemData()
+    {
+        
+    }
 }
 
 public class Order
@@ -200,13 +197,15 @@ public class Order
   public List<Product> Products {get;set;}
   public string OrderType{get;set;}
   public string OrderStatus{get;set;}
-  public decimal OrderTotal{get;set;}  
+  public decimal OrderTotal{get;set;}
+  public List<Orders> PastOrders {get;set;}  
 
-  public Order(int orderid, List<Product> products, string ordertype, string orderstatus){
+  public Order(int orderid, List<Product> products, string ordertype, string orderstatus, List<Orders> pastorders){
     OrderID = orderid;
     Products = products;
     OrderType = ordertype;
     OrderStatus = orderstatus;
+    PastOrders = pastorders;  
     CalculateOrderTotal();
 
 void CalculateOrderTotal()
@@ -236,38 +235,43 @@ void CalculateOrderTotal()
             }
         Console.WriteLine($"The order total is : {OrderTotal:C}");
   }
-    public void RemoveProduct()
+    public void DisplayOrderList()
     {
         
     }
-    public void AddtoCart()
+    public void DisplayOrderOverview()
     {
         
     }
-    public void ConfirmOrder()
+    public void DisplayBackOrder()
+    {
+
+    }
+    
+    public void SelectProduct()
     {
         
     }
-    public void CancelOrder()
+    public void SelectProductToScan()
     {
         
+    }
+    public void GetPastOrders()
+    {
+
     }
 }
 public class OrderProduct
 {
   public int OrderID {get;set;}
   public int ProductID {get;set;}
-  public string ProductName {get;set;}
   public int ProductQuantity {get;set;}
-  public decimal ProductPrice {get;set;}
 
-  public OrderProduct(int orderid, int productid, string productname, int productquantity, decimal productprice)
+  public OrderProduct(int orderid, int productid, int productquantity)
   {
     OrderID = orderid;
     ProductID = productid;
-    ProductName = productname;
     ProductQuantity = productquantity;
-    ProductPrice = productprice;
   }
 }
 public class Invoice
@@ -334,35 +338,7 @@ public class WHManager : User
     :base ( firstname,  lastname,  email, mainphonenumber){
         WHManagerID = whmanagerid;
     }
-    public void PlaceBackOrder()
-    {
-        
-    }
-   
-    public void ConfirmOrderInvoice()
-    {
-        
-    }
-    public void ModifyOrderInvoice()
-    {
-        
-    }
-    public void CancelOrderInvoiceSelection()
-    {
-        
-    }
-    public void ScanItemCode()
-    {
-        
-    }
-    public void InputItemCode()
-    {
-        
-    }
-    public void GenerateSalesForecast()
-    {
-        
-    }
+    
 }
 public class WHWorker : User
 {
@@ -372,26 +348,7 @@ public class WHWorker : User
     :base ( firstname,  lastname,  email, mainphonenumber){
         WHWorkerID = whworkerid;
         }
-    public void ConfirmOrderInvoice()
-    {
-        
-    }
-    public void ModifyOrderInvoice()
-    {
-        
-    }
-    public void CancelOrderInvoiceSelection()
-    {
-        
-    }
-    public void ScanItemCode()
-    {
-        
-    }
-    public void InputItemCode()
-    {
-        
-    }
+   
     
 }
 public class Customer : User
@@ -404,18 +361,15 @@ public class Customer : User
         CustomerID = customerid;
         FaxNumber = faxnumber;
         }
-    public void PlaceNewOrder()
-    {
-        
-    }
+   
 }
 public class NewOrder : Order 
 {
     public int CustomerID {get; set;}
     public int WorkerID {get; set;}
 
-    public NewOrder(int customerid, int workerid, int orderid, List<Product> products, string ordertype, string orderstatus): 
-    base (orderid, products, ordertype, orderstatus)
+    public NewOrder(int customerid, int workerid): 
+    base (orderid, products, ordertype, orderstatus, pastorders)
     {
         CustomerID = customerid;
         WorkerID = workerid;
@@ -425,24 +379,34 @@ public class NewOrder : Order
 public class BackOrder : Order
 {
     public int WHManagerID {get; set;}
-    public decimal TotalCost{get; set;}
 
-    public BackOrder (int whmanagerid, int orderid, List<Product> products, string ordertype, string orderstatus) : 
-    base(orderid, products, ordertype, orderstatus)
+    public BackOrder (int whmanagerid) : 
+    base(orderid, products, ordertype, orderstatus, pastorders)
     {
         WHManagerID = whmanagerid;
-        CalculateTotalCost();
-void CalculateTotalCost()
-        {
-              decimal totalcost = 0;
-
-              foreach (var product in Products)
-              {
-                  totalcost += product.ProductCost * product.Quantity;
-              }
-
-              TotalCost = totalcost;  
-        }
     }
+    public void RemoveProduct()
+    {
 
+    }
+    public void AddtoCart()
+    {
+
+    }
+    public void CancelOrder()
+    {
+
+    }
+    public void ConfirmOrder()
+    {
+
+    }
+    public void ConfirmOrder()
+    {
+
+    }
+    public void SelectProduct()
+    {
+    
+    }
 }
