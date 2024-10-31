@@ -1,4 +1,4 @@
-public class FleurCoSystem
+﻿public class FleurCoSystem
 {
     public List<Order> Orders {get;set;}
     public List<Invoice> Invoices {get;set;}
@@ -20,7 +20,7 @@ public class FleurCoSystem
     {
         foreach (Product product in Inventory.Products)
         {
-            Console.WriteLine($"ID:{product.ProductId}, Name: {product.ProductName}, Quantity: {product.Quantity}, Price: {product.Price}, Cost: {product.ProductCost} Category: {product.ProductCategory}");
+            Console.WriteLine($"ID:{product.ProductId}, Name: {product.ProductName}, Quantity: {product.GetProductQty(Inventory.Products)}, Price: {product.Price}, Cost: {product.ProductCost} Category: {product.ProductCategory}");
         }
     }
     public void SearchProduct()
@@ -120,16 +120,14 @@ public class Product
 {
     public int ProductId { get; set; }
     public string ProductName { get; set; }
-    public int Quantity { get; set; }
     public decimal Price { get; set; }
     public decimal ProductCost {get;set;}
     public string ProductCategory{get;set;}
 
-    public Product(int productId, string productName, int quantity, decimal price, decimal productCost, string productCategory)
+    public Product(int productId, string productName, decimal price, decimal productCost, string productCategory)
     {
         ProductId = productId;
         ProductName = productName;
-        Quantity = quantity;
         Price = price;
         ProductCost = productCost;
         ProductCategory = productCategory;
@@ -146,6 +144,10 @@ public class Product
     {
 
     }
+        public int GetProductQty(List<Product> products){
+        List<Product> foundProducts = products.FindAll(p => p.ProductId == ProductId);
+        return foundProducts.Count;
+    }
     
 }
 
@@ -154,13 +156,14 @@ public class Inventory
 
     public List<Product> Products {get;set;}
 
-    public int ProductQty {get;set;}
+    public Inventory()
     {
-        Products = new List<Product>();
+    
+    Products = [];
+    
+    
     }
-
-
-      public void AddProduct(Product product)
+        public void AddProduct(Product product)
      {
         
         Products.Add(product);
@@ -198,9 +201,9 @@ public class Order
   public string OrderType{get;set;}
   public string OrderStatus{get;set;}
   public decimal OrderTotal{get;set;}
-  public List<Orders> PastOrders {get;set;}  
+  public List<Order> PastOrders {get;set;}  
 
-  public Order(int orderid, List<Product> products, string ordertype, string orderstatus, List<Orders> pastorders){
+  public Order(int orderid, List<Product> products, string ordertype, string orderstatus, List<Order> pastorders){
     OrderID = orderid;
     Products = products;
     OrderType = ordertype;
@@ -214,7 +217,7 @@ void CalculateOrderTotal()
 
           foreach (var product in Products)
           {
-              total += product.Price * product.Quantity;
+              total += product.Price * product.GetProductQty(Products);
           }
 
           OrderTotal = total;  
@@ -226,13 +229,11 @@ void CalculateOrderTotal()
     Console.WriteLine($"Order number : {OrderID} of type {OrderType}. Consists of :");
       foreach (var product in Products)
       {
-          Console.WriteLine($"- Product: {product.ProductName}, Quantity: {product.Quantity}, Price: {product.Price:C}");
+          Console.WriteLine($"- Product: {product.ProductName}, Quantity: {product.GetProductQty(Products)}, Price: {product.Price:C}");
       }
         Console.WriteLine($"This order is currently {OrderStatus}");
-        foreach(var product in Products){
-           
-        
-            }
+
+      
         Console.WriteLine($"The order total is : {OrderTotal:C}");
   }
     public void DisplayOrderList()
@@ -248,7 +249,7 @@ void CalculateOrderTotal()
 
     }
     
-    public void SelectProduct()
+    public virtual void SelectProduct()
     {
         
     }
@@ -368,7 +369,7 @@ public class NewOrder : Order
     public int CustomerID {get; set;}
     public int WorkerID {get; set;}
 
-    public NewOrder(int customerid, int workerid): 
+    public NewOrder(int customerid, int workerid, int orderid, List<Product> products, string ordertype, string orderstatus, List<Order> pastorders): 
     base (orderid, products, ordertype, orderstatus, pastorders)
     {
         CustomerID = customerid;
@@ -380,7 +381,7 @@ public class BackOrder : Order
 {
     public int WHManagerID {get; set;}
 
-    public BackOrder (int whmanagerid) : 
+    public BackOrder (int whmanagerid, int orderid, List<Product> products, string ordertype, string orderstatus, List<Order> pastorders) : 
     base(orderid, products, ordertype, orderstatus, pastorders)
     {
         WHManagerID = whmanagerid;
@@ -401,11 +402,7 @@ public class BackOrder : Order
     {
 
     }
-    public void ConfirmOrder()
-    {
-
-    }
-    public void SelectProduct()
+    public override void SelectProduct()
     {
     
     }
