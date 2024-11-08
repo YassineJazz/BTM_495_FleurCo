@@ -36,15 +36,28 @@
     {
         
     }
+
+    public void ConfirmAdd()
+    {
+
+    }
     public void ModifyProduct()
     {
         
+    }
+    public void ConfirmUpdate()
+    {
+
     }
     public void RemoveProduct()
     {
         
     }
-    public void RequestForecast()
+    public void ConfirmRemoval()
+    {
+        
+    }
+    public void RequestToGenerateForecast()
     {
         
     }
@@ -52,19 +65,27 @@
     {
         
     }
-    public void GetSalesForecast()
-    {
-        
-    }
-    public void ReadItemCode()
-    {
-        
-    }
-      public void DisplayOrderList()
+    public void DisplayOrderList()
     {
         
     }
     public void SelectOrder()
+    {
+        
+    }
+    public void DisplayCustomerOrder()
+    {
+
+    }
+    public void DisplayBackOrder()
+    {
+        
+    }
+    public void SelectProductToScan()
+    {
+
+    }
+    public void ScanItemCode()
     {
         
     }
@@ -84,7 +105,22 @@
     {
         
     }
-        
+    public void EnterProductQty()
+    {
+
+    }
+    public void ConfirmBackOrder()
+    {
+
+    }
+   public void SelectFilter()
+   {
+
+   }
+   public void ProvideItemCode()
+   {
+
+   }
     
 
     
@@ -103,7 +139,10 @@ public class SalesForecast
         ProductCategory = productcategory;
         ForecastHistory = forecasthistory;
     }
-
+    public void GetSalesForecast()
+    {
+        
+    }
     public void DisplayForecastedLevel()
     {
 
@@ -132,23 +171,38 @@ public class Product
         ProductCost = productCost;
         ProductCategory = productCategory;
     }
+    public void SearchProduct()
+    {
+
+    }
+    public void SelectProduct()
+    {
+
+    }
     public void ConfirmAdd()
     {
 
     }
-    public void ConfirmModify()
+   public void ConfirmUpdate()
     {
 
     }
-    public void ConfirmRemove()
+   public void ConfirmRemoval()
     {
-
+        
     }
-        public int GetProductQty(List<Product> products){
+    public int GetProductQty(List<Product> products){
         List<Product> foundProducts = products.FindAll(p => p.ProductId == ProductId);
         return foundProducts.Count;
     }
-    
+    public void EnterProductQty()
+    {
+        
+    }
+    public void DisplayProductCategory()
+    {
+
+    }
 }
 
 public class Inventory 
@@ -162,6 +216,11 @@ public class Inventory
     Products = [];
     
     
+    }
+    
+    public void DisplayInventory()
+    {
+
     }
         public void AddProduct(Product product)
      {
@@ -236,6 +295,10 @@ void CalculateOrderTotal()
       
         Console.WriteLine($"The order total is : {OrderTotal:C}");
   }
+     public void DisplayBackOrder()
+    {
+        
+    }
     public void DisplayOrderList()
     {
         
@@ -244,16 +307,15 @@ void CalculateOrderTotal()
     {
         
     }
-    public void DisplayBackOrder()
-    {
-
-    }
-    
     public virtual void SelectProduct()
     {
         
     }
     public void SelectProductToScan()
+    {
+        
+    }
+    public void ItemScannedInformation()
     {
         
     }
@@ -398,7 +460,7 @@ public class BackOrder : Order
     {
 
     }
-    public void ConfirmOrder()
+    public void ConfirmBackOrder()
     {
 
     }
