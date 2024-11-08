@@ -113,11 +113,15 @@
     {
 
     }
-   public void SelectFilter()
+    public void SelectFleurCoSystem()
+    {
+        
+    }
+    public void SelectFilter()
    {
 
    }
-   public void ProvideItemCode()
+    public void ProvideItemCode()
    {
 
    }
@@ -183,11 +187,11 @@ public class Product
     {
 
     }
-   public void ConfirmUpdate()
+    public void ConfirmUpdate()
     {
 
     }
-   public void ConfirmRemoval()
+    public void ConfirmRemoval()
     {
         
     }
@@ -222,13 +226,12 @@ public class Inventory
     {
 
     }
-        public void AddProduct(Product product)
+    public void AddProduct(Product product)
      {
         
         Products.Add(product);
      
-    }
-     
+    } 
     public void UpdateProduct()
     {
         
@@ -237,7 +240,6 @@ public class Inventory
     {
         
     }
-    
     public void IncreaseProductQty()
     {
 
@@ -270,7 +272,7 @@ public class Order
     PastOrders = pastorders;  
     CalculateOrderTotal();
 
-void CalculateOrderTotal()
+    void CalculateOrderTotal()
       {
           decimal total = 0;
 
@@ -282,7 +284,7 @@ void CalculateOrderTotal()
           OrderTotal = total;  
       }
     }
-  public void DisplayCustomerOrder()
+    public void DisplayCustomerOrder()
     {
         
     Console.WriteLine($"Order number : {OrderID} of type {OrderType}. Consists of :");
@@ -295,7 +297,7 @@ void CalculateOrderTotal()
       
         Console.WriteLine($"The order total is : {OrderTotal:C}");
   }
-     public void DisplayBackOrder()
+    public void DisplayBackOrder()
     {
         
     }
