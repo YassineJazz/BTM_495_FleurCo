@@ -13,3 +13,10 @@ C:\Users\olipe\Desktop\BTM_495_FleurCo\app\obj\Debug\net8.0\refint\app.dll
 C:\Users\olipe\Desktop\BTM_495_FleurCo\app\obj\Debug\net8.0\app.pdb
 C:\Users\olipe\Desktop\BTM_495_FleurCo\app\obj\Debug\net8.0\app.genruntimeconfig.cache
 C:\Users\olipe\Desktop\BTM_495_FleurCo\app\obj\Debug\net8.0\ref\app.dll
+C:\Users\olipe\Desktop\BTM_495_FleurCo\app\obj\Debug\net8.0\app.csproj.AssemblyReference.cache
+C:\Users\olipe\Desktop\BTM_495_FleurCo\app\bin\Debug\net8.0\DotNetEnv.dll
+C:\Users\olipe\Desktop\BTM_495_FleurCo\app\bin\Debug\net8.0\Microsoft.Extensions.Configuration.dll
+C:\Users\olipe\Desktop\BTM_495_FleurCo\app\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\olipe\Desktop\BTM_495_FleurCo\app\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+C:\Users\olipe\Desktop\BTM_495_FleurCo\app\bin\Debug\net8.0\Sprache.dll
+C:\Users\olipe\Desktop\BTM_495_FleurCo\app\obj\Debug\net8.0\app.csproj.Up2Date

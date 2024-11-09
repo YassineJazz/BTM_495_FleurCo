@@ -1,26 +1,49 @@
+using LibSql;
+
 public class FleurCoSystem
 {
-    public List<Order> Orders { get; set; }
-    public List<Invoice> Invoices { get; set; }
+    public List<Order> Orders { get; set; } = [];
+    public List<Invoice> Invoices { get; set; } = [];
     public Inventory Inventory { get; set; }
     public string ConfirmationMessages { get; set; }
     public SalesForecast SalesForecast { get; set; }
     public Order CurrentOrder { get; set; }
-
-    public FleurCoSystem(List<Order> orders, List<Invoice> invoices, Inventory inventory, string confirmationmessages, SalesForecast salesforecast, Order currentorder)
+    private LibSqlConnection Connection { get; set; }
+    private FleurCoSystem(LibSqlConnection connection, List<Order> orders, List<Invoice> invoices)
     {
+        Connection = connection;
         Orders = orders;
         Invoices = invoices;
-        Inventory = inventory;
-        ConfirmationMessages = confirmationmessages;
-        SalesForecast = salesforecast;
-        CurrentOrder = currentorder;
     }
+
+    public static async Task<FleurCoSystem> CreateAsync(LibSqlConnection connection)
+    {
+        var orderSql = "SELECT * FROM Orders";
+        var orderDataRequest = new LibSqlRequest(LibSqlOp.Execute, orderSql);
+        var orderCloseRequest = new LibSqlRequest(LibSqlOp.Close);
+
+        var orders = await connection.Query<Order>(new List<LibSqlRequest> { orderDataRequest, orderCloseRequest });
+        if (orders == null)
+        {
+            throw new InvalidOperationException("No Orders Found");
+        }
+        var invoiceSql = "SELECT * FROM Invoices";
+        var invoiceDataRequest = new LibSqlRequest(LibSqlOp.Execute, invoiceSql);
+        var invoiceCloseRequest = new LibSqlRequest(LibSqlOp.Close);
+        var invoices = await connection.Query<Invoice>(new List<LibSqlRequest> { invoiceDataRequest, invoiceCloseRequest });
+        if (invoices == null)
+        {
+            throw new InvalidOperationException("No Invoices Found");
+        }
+        var system = new FleurCoSystem(connection, orders.ToList(), invoices.ToList());
+        return system;
+    }
+
     public void DisplayInventory()
     {
         foreach (Product product in Inventory.Products)
         {
-            Console.WriteLine($"ID:{product.ProductId}, Name: {product.ProductName}, Quantity: {product.GetProductQty(Inventory.Products)}, Price: {product.Price}, Cost: {product.ProductCost} Category: {product.ProductCategory}");
+            Console.WriteLine($"ID:{product.ProductId}, Name: {product.ProductName}, Quantity: {product.GetProductQty(Inventory.Products)}, Price: {product.ProductPrice}, Cost: {product.ProductCost} Category: {product.ProductCategory}");
         }
     }
     public void SearchProduct()
@@ -42,23 +65,24 @@ public class FleurCoSystem
         string productName = Console.ReadLine();
 
         Console.WriteLine("Enter Product Price: ");
-        decimal price = decimal.Parse(Console.ReadLine());
+        double productPrice = double.Parse(Console.ReadLine());
 
         Console.Write("Enter Product Cost: ");
-        decimal productCost = decimal.Parse(Console.ReadLine());
+        double productCost = double.Parse(Console.ReadLine());
 
         Console.Write("Enter Product Category: ");
         string productCategory = Console.ReadLine();
 
-        var newProduct = new Product(productId, productName, price, productCost, productCategory);
+        var newProduct = new Product { ProductId = productId, ProductName = productName, ProductPrice = productPrice, ProductCost = productCost, ProductCategory = productCategory };
 
         Console.WriteLine("Product Created: ");
         Console.WriteLine(newProduct);
         return newProduct;
     }
 
-    public void ConfirmAdd(Product newProduct)
+    public void ConfirmAdd()
     {
+
     }
     public void ModifyProduct()
     {

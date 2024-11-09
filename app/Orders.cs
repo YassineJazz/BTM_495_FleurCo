@@ -5,29 +5,19 @@ public class Order
   public List<Product> Products { get; set; }
   public string OrderType { get; set; }
   public string OrderStatus { get; set; }
-  public decimal OrderTotal { get; set; }
+  public double OrderTotal { get; set; }
   public List<Order> PastOrders { get; set; }
 
-  public Order(int orderid, List<Product> products, string ordertype, string orderstatus, List<Order> pastorders)
+  public void CalculateOrderTotal()
   {
-    OrderID = orderid;
-    Products = products;
-    OrderType = ordertype;
-    OrderStatus = orderstatus;
-    PastOrders = pastorders;
-    CalculateOrderTotal();
+    double total = 0;
 
-    void CalculateOrderTotal()
+    foreach (var product in Products)
     {
-      decimal total = 0;
-
-      foreach (var product in Products)
-      {
-        total += product.Price * product.GetProductQty(Products);
-      }
-
-      OrderTotal = total;
+      total += product.ProductPrice * product.GetProductQty(Products);
     }
+
+    OrderTotal = total;
   }
   public void DisplayCustomerOrder()
   {
@@ -35,7 +25,7 @@ public class Order
     Console.WriteLine($"Order number : {OrderID} of type {OrderType}. Consists of :");
     foreach (var product in Products)
     {
-      Console.WriteLine($"- Product: {product.ProductName}, Quantity: {product.GetProductQty(Products)}, Price: {product.Price:C}");
+      Console.WriteLine($"- Product: {product.ProductName}, Quantity: {product.GetProductQty(Products)}, Price: {product.ProductPrice:C}");
     }
     Console.WriteLine($"This order is currently {OrderStatus}");
 
@@ -89,24 +79,12 @@ public class NewOrder : Order
 {
   public int CustomerID { get; set; }
   public int WorkerID { get; set; }
-
-  public NewOrder(int customerid, int workerid, int orderid, List<Product> products, string ordertype, string orderstatus, List<Order> pastorders) :
-  base(orderid, products, ordertype, orderstatus, pastorders)
-  {
-    CustomerID = customerid;
-    WorkerID = workerid;
-  }
 }
 
 public class BackOrder : Order
 {
   public int WHManagerID { get; set; }
 
-  public BackOrder(int whmanagerid, int orderid, List<Product> products, string ordertype, string orderstatus, List<Order> pastorders) :
-  base(orderid, products, ordertype, orderstatus, pastorders)
-  {
-    WHManagerID = whmanagerid;
-  }
   public void RemoveProduct()
   {
 

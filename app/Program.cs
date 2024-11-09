@@ -1,11 +1,40 @@
-﻿class Program
+﻿using LibSql;
+
+class Program
 {
     static readonly Menu MenuOption = new(["1. Inventory", "2. Orders", "3. Sales Forecasts", "4. Exit"]);
     static readonly Menu InventoryOption = new(["1. Display Inventory", "2. Add New Product", "3. Modify Existing Product", "4. Remove Product", "5. Go Back", "6. Exit"]);
     static readonly Menu OrderOption = new(["1. Customer Orders", "2. Backorders", "3. Display Past Orders", "4. Go Back", "5. Exit"]);
     static readonly Menu ForecastOption = new(["1. Create Forecast", "2. Display Past Forecasts", "3. Go Back", "4. Exit"]);
-    static void Main(string[] args)
+    static async Task Main(string[] args)
     {
+
+
+
+        DotNetEnv.Env.Load();
+        string? tursoDb = Environment.GetEnvironmentVariable("TURSO_DB");
+        string? tursoOrg = Environment.GetEnvironmentVariable("TURSO_ORG");
+        string? tursoToken = Environment.GetEnvironmentVariable("TURSO_TOKEN");
+
+        if (tursoDb == null)
+        {
+            Console.Error.WriteLine("Missing TURSO_DB env var");
+            return;
+        }
+        if (tursoOrg == null)
+        {
+            Console.Error.WriteLine("Missing TURSO_ORG env var");
+            return;
+        }
+        if (tursoToken == null)
+        {
+            Console.Error.WriteLine("Missing TURSO_TOKEN env var");
+            return;
+        }
+
+        var connection = new LibSqlConnection(tursoOrg, tursoDb, tursoToken);
+        var system = await FleurCoSystem.CreateAsync(connection);
+        Console.WriteLine(system.Orders.Count);
         bool exit = false;
         while (!exit)
         {

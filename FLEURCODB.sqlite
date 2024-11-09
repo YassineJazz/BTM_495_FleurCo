@@ -64,11 +64,11 @@ CREATE TABLE BackOrders (
 
 CREATE TABLE Products (
     product_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_code INTEGER,
     product_name TEXT,
-    product_category TEXT,
-    product_type TEXT,
     product_price REAL,
-    product_cost REAL
+    product_cost REAL,
+    product_category TEXT
 );
 
 CREATE TABLE Inventory ( 
