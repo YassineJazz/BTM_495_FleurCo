@@ -16,12 +16,11 @@ public class FleurCoSystem
         Invoices = invoices;
     }
 
-    public static async Task<FleurCoSystem> CreateAsync(LibSqlConnection connection)
+    public static async Task<FleurCoSystem> CreateSystemAsync(LibSqlConnection connection)
     {
         var orderSql = "SELECT * FROM Orders";
         var orderDataRequest = new LibSqlRequest(LibSqlOp.Execute, orderSql);
         var orderCloseRequest = new LibSqlRequest(LibSqlOp.Close);
-
         var orders = await connection.Query<Order>(new List<LibSqlRequest> { orderDataRequest, orderCloseRequest });
         if (orders == null)
         {
