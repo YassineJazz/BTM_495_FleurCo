@@ -34,7 +34,7 @@ class Program
 
         var connection = new LibSqlConnection(tursoOrg, tursoDb, tursoToken);
         var system = await FleurCoSystem.CreateAsync(connection);
-        Console.WriteLine(system.Orders.Count);
+
         bool exit = false;
         while (!exit)
         {
