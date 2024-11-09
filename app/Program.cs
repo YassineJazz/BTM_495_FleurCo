@@ -4,7 +4,7 @@ class Program
 {
     static readonly Menu MenuOption = new(["1. Inventory", "2. Orders", "3. Sales Forecasts", "4. Exit"]);
     static readonly Menu InventoryOption = new(["1. Display Inventory", "2. Add New Product", "3. Modify Existing Product", "4. Remove Product", "5. Go Back", "6. Exit"]);
-    static readonly Menu OrderOption = new(["1. Customer Orders", "2. Backorders", "3. Display Past Orders", "4. Go Back", "5. Exit"]);
+    static readonly Menu OrderOption = new(["1. Display Order List", "2. Customer Orders", "3. Backorders", "4. Display Past Orders", "5. Go Back", "6. Exit"]);
     static readonly Menu ForecastOption = new(["1. Create Forecast", "2. Display Past Forecasts", "3. Go Back", "4. Exit"]);
     static async Task Main(string[] args)
     {
@@ -33,12 +33,8 @@ class Program
         }
 
         var connection = new LibSqlConnection(tursoOrg, tursoDb, tursoToken);
-        var system = await FleurCoSystem.CreateSystemAsync(connection);
-        var inventory = await Inventory.CreateInvAsynch(connection);
-
-        // Console.WriteLine(system.Orders.Count);
-        // Console.WriteLine(system.Invoices.Count);
-        // Console.WriteLine(inventory.Products.Count);
+        var system = new FleurCoSystem(connection);
+        var inventory = new Inventory();
 
         bool exit = false;
         while (!exit)
@@ -58,6 +54,7 @@ class Program
                     {
                         case "1":
                             Console.WriteLine("\nDisplaying Inventory");
+                            await system.DisplayInventory();
                             break;
                         case "2":
                             Console.WriteLine("\nYou Selected Add New Product");
@@ -85,18 +82,22 @@ class Program
                     switch (Console.ReadLine())
                     {
                         case "1":
-                            Console.WriteLine("\nYou Selected Customer Orders");
+                            Console.WriteLine("\nDisplaying Order List:");
+                            await system.DisplayOrderList();
                             break;
                         case "2":
-                            Console.WriteLine("\nYou Selected Backorders");
+                            Console.WriteLine("\nYou Selected Customer Orders");
                             break;
                         case "3":
-                            Console.WriteLine("\nDisplaying Past Orders");
+                            Console.WriteLine("\nYou Selected Backorders");
                             break;
                         case "4":
-                            Console.WriteLine("\nReturning to Previous Menu...");
+                            Console.WriteLine("\nDisplaying Past Orders");
                             break;
                         case "5":
+                            Console.WriteLine("\nReturning to Previous Menu...");
+                            break;
+                        case "6":
                             Console.WriteLine("\nExiting...");
                             exit = true;
                             break;

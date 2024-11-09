@@ -64,13 +64,16 @@ CREATE TABLE BackOrders (
 
 CREATE TABLE Products (
     product_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    product_code INTEGER,
     product_name TEXT,
     product_price REAL,
     product_cost REAL,
     product_category TEXT
 );
-    
+CREATE TABLE Inventory ( 
+    inventory_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id,
+    FOREIGN KEY (product_id) REFERENCES Products(product_id)
+    );
 CREATE TABLE OrderProducts (
     order_id INTEGER,
     product_id INTEGER,

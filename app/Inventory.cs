@@ -3,37 +3,20 @@ using LibSql;
 public class Inventory
 {
 
-    public List<Product> Products { get; set; } = [];
-    private LibSqlConnection Connection { get; set; }
-    private Inventory(LibSqlConnection connection, List<Product> products)
+    public static async Task<Rows<InventoryProduct>> DisplayInventory(LibSqlConnection connection)
     {
-        Connection = connection;
-        Products = products;
-    }
-
-    public static async Task<Inventory> CreateInvAsynch(LibSqlConnection connection)
-    {
-        var productSql = "SELECT * FROM Products";
-        var productDataRequest = new LibSqlRequest(LibSqlOp.Execute, productSql);
-        var productCloseRequest = new LibSqlRequest(LibSqlOp.Close);
-
-        var products = await connection.Query<Product>(new List<LibSqlRequest> { productDataRequest, productCloseRequest });
-        if (products == null)
+        var inventorySql = "SELECT inventory.inventory_id, products.* FROM inventory INNER JOIN products ON inventory.product_id = products.product_id";
+        var inventoryDataRequest = new LibSqlRequest(LibSqlOp.Execute, inventorySql);
+        var inventoryCloseRequest = new LibSqlRequest(LibSqlOp.Close);
+        var inventory = await connection.Query<InventoryProduct>([inventoryDataRequest, inventoryCloseRequest]);
+        if (inventory == null)
         {
-            throw new InvalidOperationException("No Products Found");
+            throw new InvalidOperationException("No Inventory To Display");
         }
-        var inventory = new Inventory(connection, products.ToList());
         return inventory;
-
     }
-    public void DisplayInventory()
+    public void AddProduct()
     {
-
-    }
-    public void AddProduct(Product product)
-    {
-
-        Products.Add(product);
 
     }
     public void UpdateProduct()
@@ -56,4 +39,9 @@ public class Inventory
     {
 
     }
+}
+public class InventoryProduct : Product
+{
+    [ColumnName("inventory_id")]
+    public int InventoryId { get; set; }
 }

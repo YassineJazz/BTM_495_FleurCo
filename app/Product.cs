@@ -2,7 +2,6 @@ using LibSql;
 public class Product
 {
     [ColumnName("product_id")] public int ProductId { get; set; }
-    [ColumnName("product_code")] public int ProductCode { get; set; }
     [ColumnName("product_name")] public string ProductName { get; set; }
     [ColumnName("product_price")] public double ProductPrice { get; set; }
     [ColumnName("product_cost")] public double ProductCost { get; set; }
@@ -37,7 +36,7 @@ public class Product
     }
     public int GetProductQty(List<Product> products)
     {
-        List<Product> foundProducts = products.FindAll(p => p.ProductCode == ProductCode);
+        List<Product> foundProducts = products.FindAll(p => p.ProductId == ProductId);
         return foundProducts.Count;
     }
     public void EnterProductQty()

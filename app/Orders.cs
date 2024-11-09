@@ -1,11 +1,13 @@
+using LibSql;
+
 public class Order
 {
 
-  public int OrderID { get; set; }
+  [ColumnName("order_id")] public int OrderID { get; set; }
   public List<Product> Products { get; set; }
-  public string OrderType { get; set; }
-  public string OrderStatus { get; set; }
-  public double OrderTotal { get; set; }
+  [ColumnName("order_type")] public string OrderType { get; set; }
+  [ColumnName("order_status")] public string OrderStatus { get; set; }
+  [ColumnName("order_total")] public double OrderTotal { get; set; }
   public List<Order> PastOrders { get; set; }
 
   public void CalculateOrderTotal()
@@ -36,8 +38,17 @@ public class Order
   {
 
   }
-  public void DisplayOrderList()
+  public static async Task<Rows<Order>> DisplayOrderList(LibSqlConnection connection)
   {
+    var orderSql = "SELECT * FROM Orders";
+    var orderDataRequest = new LibSqlRequest(LibSqlOp.Execute, orderSql);
+    var orderCloseRequest = new LibSqlRequest(LibSqlOp.Close);
+    var orders = await connection.Query<Order>([orderDataRequest, orderCloseRequest]);
+    if (orders == null)
+    {
+      throw new InvalidOperationException("No Orders Found");
+    }
+    return orders;
 
   }
   public void DisplayOrderOverview()
