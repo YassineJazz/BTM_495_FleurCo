@@ -159,8 +159,8 @@ public class FleurCoSystem
         {
             Console.WriteLine
             (@$"- Order ID: {order.OrderID}, 
-            Order Status: {order.OrderStatus} 
             Order Type: {order.OrderType}, 
+            Order Status: {order.OrderStatus}, 
             Order Total: {order.OrderTotal:C}");
         }
 
@@ -170,12 +170,32 @@ public class FleurCoSystem
     {
 
     }
-    public void DisplayCustomerOrder()
+    public async Task DisplayCustomerOrder()
     {
+        var customerOrderList = await Order.DisplayCustomerOrders(Connection);
+        foreach (var order in customerOrderList)
+        {
+            Console.WriteLine
+            (@$"- Order ID: {order.OrderID}, 
+            Order Type: {order.OrderType}, 
+            Order Status: {order.OrderStatus}, 
+            Order Total: {order.OrderTotal:C}");
+        }
+
 
     }
-    public void DisplayBackOrder()
+    public async Task DisplayBackOrder()
     {
+        var backOrderList = await Order.DisplayBackOrders(Connection);
+        foreach (var order in backOrderList)
+        {
+            Console.WriteLine
+            (@$"- Order ID: {order.OrderID}, 
+            Order Type: {order.OrderType}, 
+            Order Status: {order.OrderStatus},
+            Order Total: {order.OrderTotal:C}");
+        }
+
 
     }
     public void SelectProductToScan()

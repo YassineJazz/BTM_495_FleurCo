@@ -21,23 +21,7 @@ public class Order
 
     OrderTotal = total;
   }
-  public void DisplayCustomerOrder()
-  {
 
-    Console.WriteLine($"Order number : {OrderID} of type {OrderType}. Consists of :");
-    foreach (var product in Products)
-    {
-      Console.WriteLine($"- Product: {product.ProductName}, Quantity: {product.GetProductQty(Products)}, Price: {product.ProductPrice:C}");
-    }
-    Console.WriteLine($"This order is currently {OrderStatus}");
-
-
-    Console.WriteLine($"The order total is : {OrderTotal:C}");
-  }
-  public void DisplayBackOrder()
-  {
-
-  }
   public static async Task<Rows<Order>> DisplayOrderList(LibSqlConnection connection)
   {
     var orderSql = "SELECT * FROM Orders";
@@ -48,7 +32,28 @@ public class Order
       throw new InvalidOperationException("No Orders Found");
     }
     return orders;
-
+  }
+  public static async Task<Rows<Order>> DisplayCustomerOrders(LibSqlConnection connection)
+  {
+    var orderSql = "SELECT * FROM Orders WHERE order_type = 'customer'";
+    var orderDataRequest = new LibSqlRequest(LibSqlOp.Execute, orderSql);
+    var orders = await connection.Query<Order>([orderDataRequest]);
+    if (orders == null)
+    {
+      throw new InvalidOperationException("No Customer Orders Found");
+    }
+    return orders;
+  }
+  public static async Task<Rows<Order>> DisplayBackOrders(LibSqlConnection connection)
+  {
+    var orderSql = "SELECT * FROM Orders WHERE order_type = 'backorder'";
+    var orderDataRequest = new LibSqlRequest(LibSqlOp.Execute, orderSql);
+    var orders = await connection.Query<Order>([orderDataRequest]);
+    if (orders == null)
+    {
+      throw new InvalidOperationException("No Orders Backorders Found");
+    }
+    return orders;
   }
   public void DisplayOrderOverview()
   {

@@ -4,7 +4,7 @@ class Program
 {
     static readonly Menu MenuOption = new(["1. Inventory", "2. Orders", "3. Sales Forecasts", "4. Exit"]);
     static readonly Menu InventoryOption = new(["1. Display Inventory", "2. Add New Product", "3. Modify Existing Product", "4. Remove Product", "5. Go Back", "6. Exit"]);
-    static readonly Menu OrderOption = new(["1. Display Order List", "2. Customer Orders", "3. Backorders", "4. Display Past Orders", "5. Go Back", "6. Exit"]);
+    static readonly Menu OrderOption = new(["1. Display Order List", "2. Customer Orders", "3. Backorders", "4. Create Backorder", "5. Go Back", "6. Exit"]);
     static readonly Menu ForecastOption = new(["1. Create Forecast", "2. Display Past Forecasts", "3. Go Back", "4. Exit"]);
     static async Task Main(string[] args)
     {
@@ -91,12 +91,14 @@ class Program
                             break;
                         case "2":
                             Console.WriteLine("\nYou Selected Customer Orders");
+                            await system.DisplayCustomerOrder();
                             break;
                         case "3":
                             Console.WriteLine("\nYou Selected Backorders");
+                            await system.DisplayBackOrder();
                             break;
                         case "4":
-                            Console.WriteLine("\nDisplaying Past Orders");
+                            Console.WriteLine("\nCreating Backorder");
                             break;
                         case "5":
                             Console.WriteLine("\nReturning to Previous Menu...");
