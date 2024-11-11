@@ -1,6 +1,0 @@
-C:\Users\olipe\Desktop\BTM_495_FleurCo\obj\Debug\net8.0\BTM_495_FleurCo.csproj.AssemblyReference.cache
-C:\Users\olipe\Desktop\BTM_495_FleurCo\obj\Debug\net8.0\BTM_495_FleurCo.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\olipe\Desktop\BTM_495_FleurCo\obj\Debug\net8.0\BTM_495_FleurCo.AssemblyInfoInputs.cache
-C:\Users\olipe\Desktop\BTM_495_FleurCo\obj\Debug\net8.0\BTM_495_FleurCo.AssemblyInfo.cs
-C:\Users\olipe\Desktop\BTM_495_FleurCo\obj\Debug\net8.0\BTM_495_FleurCo.csproj.CoreCompileInputs.cache
-C:\Users\olipe\Desktop\BTM_495_FleurCo\obj\Debug\net8.0\BTM_495_FleurCo.sourcelink.json
