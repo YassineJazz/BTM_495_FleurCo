@@ -15,6 +15,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Collections;
 using System.Reflection;
+using System.Diagnostics;
 
 namespace LibSql;
 
@@ -68,41 +69,60 @@ public class LibSqlStatement
     }
 }
 
-class LibSqlRequestWrapper
+public class LibSqlRequestWrapper
 {
     public List<LibSqlRequest> requests { get; set; }
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? baton { get; set; }
 
-    public LibSqlRequestWrapper(List<LibSqlRequest> requests)
+    public LibSqlRequestWrapper(List<LibSqlRequest> requests, string? baton)
     {
+        this.baton = baton;
         this.requests = requests;
     }
 }
 
 
-enum LibSqlStatus { Open, Closed, Error }
 
 public class LibSqlConnection
 {
-    private readonly HttpClient _httpClient;
-    private LibSqlStatus _status;
     public readonly string org;
     public readonly string db;
+
     private readonly string _url;
+    private readonly HttpClient _httpClient;
     private string? _baton;
+    private DateTime _lastActivityTime;
 
     public LibSqlConnection(string org, string db, string token)
     {
         _httpClient = new HttpClient();
         _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-        _status = LibSqlStatus.Closed;
         this.org = org;
         this.db = db;
         this._url = $"https://{db}-{org}.turso.io/v2/pipeline";
+        this._lastActivityTime = DateTime.Now;
     }
 
-    public async Task<Rows<T>> Query<T>(List<LibSqlRequest> request) where T : new()
+    private void ResetBatonIfExpired()
     {
-        var json = JsonSerializer.Serialize(new LibSqlRequestWrapper(request));
+        if (this._baton != null && (DateTime.Now - this._lastActivityTime).TotalSeconds > 8)
+        {
+            this._baton = null;
+        }
+    }
+
+    private async Task<LibSqlResponse> SendAndUpdateState(List<LibSqlRequest> request)
+    {
+        // If the user is closing the connection, we need to reset the baton
+        if (request.Any(r => r.type == LibSqlOp.Close))
+        {
+            this._baton = null;
+        }
+        ResetBatonIfExpired();
+
+        var json = JsonSerializer.Serialize(new LibSqlRequestWrapper(request, this._baton));
+
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
         var httpResponse = await _httpClient.PostAsync(_url, content);
@@ -117,6 +137,18 @@ public class LibSqlConnection
         if (response.baton != null)
         {
             this._baton = response.baton;
+        }
+        this._lastActivityTime = DateTime.Now;
+
+        return response;
+    }
+    public async Task<Rows<T>?> Query<T>(List<LibSqlRequest> request) where T : new()
+    {
+        var response = await SendAndUpdateState(request);
+
+        if (response.results == null || response.results.Count == 0 || response.results[0].response == null)
+        {
+            return null;
         }
 
         var resultData = response.results[0].response.result;
@@ -127,26 +159,21 @@ public class LibSqlConnection
         return new Rows<T>(resultData.rows, resultData.cols);
 
     }
-    public async Task<int> Execute(List<LibSqlRequest> request)
+    public async Task<int?> Execute(List<LibSqlRequest> request)
     {
-        var json = JsonSerializer.Serialize(new LibSqlRequestWrapper(request));
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        var response = await SendAndUpdateState(request);
 
-        var httpResponse = await _httpClient.PostAsync(_url, content);
-        var result = await httpResponse.Content.ReadAsStringAsync();
-
-        var response = JsonSerializer.Deserialize<LibSqlResponse>(result);
-
-
-        if (response == null)
+        if (response.results == null || response.results.Count == 0 || response.results[0].response == null)
         {
-            throw new Exception("No response");
+            return null;
         }
-        if (response.baton != null)
+        if (response.results.Count == 1)
         {
-            this._baton = response.baton;
+            if (response.results[0].response.type == "close")
+            {
+                return 0;
+            }
         }
-
         var resultData = response.results[0].response.result;
         if (resultData == null)
         {
@@ -154,18 +181,44 @@ public class LibSqlConnection
         }
         return resultData.affected_row_count;
     }
+
+    public async Task Close()
+    {
+        if (this._baton == null)
+        {
+            return;
+        }
+        var closeRequest = new LibSqlRequest(LibSqlOp.Close);
+        var affected = await Execute([closeRequest]);
+        Debug.Assert(affected == 0);
+    }
 }
 
 [Serializable]
 public class LibSqlArg
 {
     public string type { get; set; }
-    public string value { get; set; }
+    public object value { get; set; }
 
     public LibSqlArg(object value)
     {
         this.type = GetTypeString(value);
-        this.value = value?.ToString()!;
+        this.value = ConvertValue(value);
+    }
+
+    private object ConvertValue(object value)
+    {
+        if (value is bool boolValue)
+        {
+            return boolValue.ToString().ToLower();
+        }
+
+        if (value is int intValue)
+        {
+            return intValue.ToString();
+        }
+
+        return value;
     }
 
     private string GetTypeString(object value)

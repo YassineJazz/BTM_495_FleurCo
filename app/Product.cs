@@ -1,7 +1,7 @@
 using LibSql;
 public class Product
 {
-    [ColumnName("product_id")] public int ProductId { get; set; }
+    [ColumnName("product_id")] public string ProductId { get; set; }
     [ColumnName("product_name")] public string ProductName { get; set; }
     [ColumnName("product_price")] public double ProductPrice { get; set; }
     [ColumnName("product_cost")] public double ProductCost { get; set; }
@@ -22,9 +22,21 @@ public class Product
     {
 
     }
-    public void ConfirmAdd()
+    public static async Task ConfirmAdd(LibSqlConnection connection, Product newProduct)
     {
+        var addSql = @"INSERT INTO Products (product_id, product_name, product_price, product_cost, product_category) VALUES (?,?,?,?,?) ";
 
+        var addArgs = new List<LibSqlArg>
+        {
+            new LibSqlArg(newProduct.ProductId),
+            new LibSqlArg(newProduct.ProductName),
+            new LibSqlArg(newProduct.ProductPrice),
+            new LibSqlArg(newProduct.ProductCost),
+            new LibSqlArg(newProduct.ProductCategory)
+
+        };
+        var addDataRequest = new LibSqlRequest(LibSqlOp.Execute, addSql, addArgs);
+        await connection.Execute([addDataRequest]);
     }
     public void ConfirmUpdate()
     {
@@ -46,5 +58,9 @@ public class Product
     public void DisplayProductCategory()
     {
 
+    }
+    public void DisplayProductInfo()
+    {
+        Console.WriteLine($"Product Name: {ProductName}, Product Price: {ProductPrice}, Product Cost: {ProductCost}, Product Category: {ProductCategory},");
     }
 }

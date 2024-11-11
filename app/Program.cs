@@ -34,7 +34,6 @@ class Program
 
         var connection = new LibSqlConnection(tursoOrg, tursoDb, tursoToken);
         var system = new FleurCoSystem(connection);
-        var inventory = new Inventory();
 
         bool exit = false;
         while (!exit)
@@ -58,6 +57,11 @@ class Program
                             break;
                         case "2":
                             Console.WriteLine("\nYou Selected Add New Product");
+
+                            var newProduct = system.CreateNewProduct();
+                            await system.ConfirmAdd(newProduct);
+                            await Inventory.AddProduct(connection, newProduct);
+
                             break;
                         case "3":
                             Console.WriteLine("\nYou Selected Modify Existing Product");
@@ -129,7 +133,7 @@ class Program
                     exit = true;
                     break;
                 default:
-                    Console.WriteLine("\nInvalid option. Please try again.");
+                    Logger.Error("Invalid option. Please try again.");
                     break;
             }
 
@@ -139,5 +143,6 @@ class Program
                 Console.ReadKey();
             }
         }
+        await connection.Close();
     }
 }

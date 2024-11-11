@@ -3,7 +3,7 @@ using LibSql;
 public class Order
 {
 
-  [ColumnName("order_id")] public int OrderID { get; set; }
+  [ColumnName("order_id")] public string OrderID { get; set; }
   public List<Product> Products { get; set; }
   [ColumnName("order_type")] public string OrderType { get; set; }
   [ColumnName("order_status")] public string OrderStatus { get; set; }
@@ -42,8 +42,7 @@ public class Order
   {
     var orderSql = "SELECT * FROM Orders";
     var orderDataRequest = new LibSqlRequest(LibSqlOp.Execute, orderSql);
-    var orderCloseRequest = new LibSqlRequest(LibSqlOp.Close);
-    var orders = await connection.Query<Order>([orderDataRequest, orderCloseRequest]);
+    var orders = await connection.Query<Order>([orderDataRequest]);
     if (orders == null)
     {
       throw new InvalidOperationException("No Orders Found");
@@ -74,11 +73,11 @@ public class Order
 }
 public class OrderProduct
 {
-  public int OrderID { get; set; }
-  public int ProductID { get; set; }
+  public string OrderID { get; set; }
+  public string ProductID { get; set; }
   public int ProductQuantity { get; set; }
 
-  public OrderProduct(int orderid, int productid, int productquantity)
+  public OrderProduct(string orderid, string productid, int productquantity)
   {
     OrderID = orderid;
     ProductID = productid;
@@ -88,13 +87,13 @@ public class OrderProduct
 
 public class NewOrder : Order
 {
-  public int CustomerID { get; set; }
-  public int WorkerID { get; set; }
+  public string CustomerID { get; set; }
+  public string WorkerID { get; set; }
 }
 
 public class BackOrder : Order
 {
-  public int WHManagerID { get; set; }
+  public string WHManagerID { get; set; }
 
   public void RemoveProduct()
   {

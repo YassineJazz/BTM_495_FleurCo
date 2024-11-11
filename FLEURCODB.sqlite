@@ -2,7 +2,7 @@
 PRAGMA foreign_keys = ON;
 
 CREATE TABLE Users (
-    user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id TEXT PRIMARY KEY UNIQUE,
     first_name TEXT,
     last_name TEXT,
     email TEXT,
@@ -10,23 +10,23 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE WarehouseManagers (
-    whm_id INTEGER,
+    whm_id TEXT UNIQUE,
     FOREIGN KEY (whm_id) REFERENCES Users(user_id)
 );
 
 CREATE TABLE WarehouseWorkers (
-    whw_id INTEGER,
+    whw_id TEXT UNIQUE,
     FOREIGN KEY (whw_id) REFERENCES Users(user_id)
 );
 
 CREATE TABLE Customers (
-    customer_id INTEGER,
+    customer_id TEXT UNIQUE,
     fax_number TEXT,
     FOREIGN KEY (customer_id) REFERENCES Users(user_id)
 );
 
 CREATE TABLE Addresses (
-    address_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    address_id TEXT PRIMARY KEY UNIQUE,
     street TEXT,
     municipality TEXT,
     province TEXT,
@@ -38,7 +38,7 @@ CREATE TABLE Addresses (
 );
 
 CREATE TABLE Orders (
-    order_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    order_id TEXT PRIMARY KEY UNIQUE,
     order_type TEXT,
     order_status TEXT,
     order_total REAL
@@ -63,14 +63,14 @@ CREATE TABLE BackOrders (
 );
 
 CREATE TABLE Products (
-    product_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id TEXT PRIMARY KEY UNIQUE,
     product_name TEXT,
     product_price REAL,
     product_cost REAL,
     product_category TEXT
 );
 CREATE TABLE Inventory ( 
-    inventory_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    inventory_id TEXT PRIMARY KEY UNIQUE,
     product_id,
     FOREIGN KEY (product_id) REFERENCES Products(product_id)
     );
@@ -83,7 +83,7 @@ CREATE TABLE OrderProducts (
 );
 
 CREATE TABLE Invoices (
-    invoice_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    invoice_id TEXT PRIMARY KEY UNIQUE,
     total_price REAL,
     invoice_date DATE,
     order_id INTEGER,
@@ -91,7 +91,7 @@ CREATE TABLE Invoices (
 );
 
 CREATE TABLE SalesForecasts (
-    forecast_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    forecast_id TEXT PRIMARY KEY UNIQUE,
     start_date DATE,
     end_date DATE,
     forecast_stock_level INTEGER,

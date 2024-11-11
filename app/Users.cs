@@ -15,9 +15,9 @@ public class User
 }
 public class WHManager : User
 {
-    public int WHManagerID { get; set; }
+    public string WHManagerID { get; set; }
 
-    public WHManager(int whmanagerid, string firstname, string lastname, string email, string mainphonenumber)
+    public WHManager(string whmanagerid, string firstname, string lastname, string email, string mainphonenumber)
     : base(firstname, lastname, email, mainphonenumber)
     {
         WHManagerID = whmanagerid;
@@ -26,9 +26,9 @@ public class WHManager : User
 }
 public class WHWorker : User
 {
-    public int WHWorkerID { get; set; }
+    public string WHWorkerID { get; set; }
 
-    public WHWorker(int whworkerid, string firstname, string lastname, string email, string mainphonenumber)
+    public WHWorker(string whworkerid, string firstname, string lastname, string email, string mainphonenumber)
     : base(firstname, lastname, email, mainphonenumber)
     {
         WHWorkerID = whworkerid;
@@ -38,10 +38,10 @@ public class WHWorker : User
 }
 public class Customer : User
 {
-    public int CustomerID { get; set; }
+    public string CustomerID { get; set; }
     public string FaxNumber { get; set; }
 
-    public Customer(int customerid, string firstname, string lastname, string email, string mainphonenumber, string faxnumber)
+    public Customer(string customerid, string firstname, string lastname, string email, string mainphonenumber, string faxnumber)
     : base(firstname, lastname, email, mainphonenumber)
     {
         CustomerID = customerid;
