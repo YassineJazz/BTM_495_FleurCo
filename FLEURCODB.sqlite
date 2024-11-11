@@ -72,7 +72,7 @@ CREATE TABLE Products (
 CREATE TABLE Inventory ( 
     inventory_id TEXT PRIMARY KEY UNIQUE,
     product_id,
-    FOREIGN KEY (product_id) REFERENCES Products(product_id)
+    FOREIGN KEY (product_id) REFERENCES Products(product_id) ON DELETE CASCADE
     );
 CREATE TABLE OrderProducts (
     order_id INTEGER,

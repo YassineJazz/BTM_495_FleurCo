@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using LibSql;
 
 public class Inventory
@@ -28,12 +29,14 @@ public class Inventory
     }
     public void UpdateProduct()
     {
-
+        //Method unnecessary since, when updating the product, GUI_ID does not change, meaning that the foreign_key in inventory is still the same
     }
     public void DeleteProduct()
     {
-
+        //Method unnecessary since product is automatically removed from inventory when product is removed 
+        //(FOREIGN KEY (product_id) REFERENCES Products(product_id) ON DELETE CASCADE)
     }
+
     public void IncreaseProductQty()
     {
 

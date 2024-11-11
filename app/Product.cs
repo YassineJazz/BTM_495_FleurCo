@@ -14,6 +14,17 @@ public class Product
     //     ProductCost = productCost;
     //     ProductCategory = productCategory;
     // }
+    public static async Task<Rows<Product>> DisplayProductLine(LibSqlConnection connection)
+    {
+        var productLineSql = "SELECT * FROM Products";
+        var productLineDataRequest = new LibSqlRequest(LibSqlOp.Execute, productLineSql);
+        var productLine = await connection.Query<Product>([productLineDataRequest]);
+        if (productLine == null)
+        {
+            throw new InvalidOperationException("No Products To Display");
+        }
+        return productLine;
+    }
     public void SearchProduct()
     {
 
@@ -38,13 +49,33 @@ public class Product
         var addDataRequest = new LibSqlRequest(LibSqlOp.Execute, addSql, addArgs);
         await connection.Execute([addDataRequest]);
     }
-    public void ConfirmUpdate()
+    public static async Task ConfirmUpdate(LibSqlConnection connection, Product modifiedProduct)
     {
+        var updateSql = @"UPDATE Products SET product_name = ?, product_price = ?, product_cost = ?, product_category = ? WHERE product_id = ?";
 
+        var updateArgs = new List<LibSqlArg>
+        {
+            new LibSqlArg(modifiedProduct.ProductName),
+            new LibSqlArg(modifiedProduct.ProductPrice),
+            new LibSqlArg(modifiedProduct.ProductCost),
+            new LibSqlArg(modifiedProduct.ProductCategory),
+            new LibSqlArg(modifiedProduct.ProductId)
+
+        };
+        var addDataRequest = new LibSqlRequest(LibSqlOp.Execute, updateSql, updateArgs);
+        await connection.Execute([addDataRequest]);
     }
-    public void ConfirmRemoval()
+    public static async Task ConfirmRemoval(LibSqlConnection connection, Product productToRemove)
     {
+        var deleteSql = @"DELETE FROM Products WHERE product_id = ?";
 
+        var deleteArgs = new List<LibSqlArg>
+        {
+            new LibSqlArg(productToRemove.ProductId)
+
+        };
+        var addDataRequest = new LibSqlRequest(LibSqlOp.Execute, deleteSql, deleteArgs);
+        await connection.Execute([addDataRequest]);
     }
     public int GetProductQty(List<Product> products)
     {
