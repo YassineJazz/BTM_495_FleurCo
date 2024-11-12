@@ -1,11 +1,10 @@
-using System.ComponentModel.DataAnnotations;
 using LibSql;
 
 public class Inventory
 {
     public static async Task<Rows<InventoryProduct>> DisplayInventory(LibSqlConnection connection)
     {
-        var inventorySql = "SELECT inventory.inventory_id, products.* FROM inventory INNER JOIN products ON inventory.product_id = products.product_id";
+        var inventorySql = "SELECT inventory.inventory_id, products.*, inventory.quantity FROM inventory INNER JOIN products ON inventory.product_id = products.product_id";
         var inventoryDataRequest = new LibSqlRequest(LibSqlOp.Execute, inventorySql);
         var inventory = await connection.Query<InventoryProduct>([inventoryDataRequest]);
         if (inventory == null)
@@ -17,7 +16,7 @@ public class Inventory
 
     public static async Task AddProduct(LibSqlConnection connection, Product newProduct)
     {
-        var addSql = @"INSERT INTO Inventory (inventory_id, product_id) VALUES (?,?) ";
+        var addSql = @"INSERT INTO Inventory (inventory_id, product_id, quantity) VALUES (?,?,1) ";
 
         var addArgs = new List<LibSqlArg>
         {
@@ -26,6 +25,18 @@ public class Inventory
         };
         var addDataRequest = new LibSqlRequest(LibSqlOp.Execute, addSql, addArgs);
         await connection.Execute([addDataRequest]);
+    }
+    public static async Task ConfirmUpdateQty(LibSqlConnection connection, InventoryProduct itemToUpdate, double newQuanity)
+    {
+        var updateQtySql = @"UPDATE Inventory SET quantity = ? WHERE product_id = ?";
+        var updateQtyArgs = new List<LibSqlArg>
+        {
+            new LibSqlArg(newQuanity),
+            new LibSqlArg(itemToUpdate.ProductId)
+        };
+        var updateQtyRequest = new LibSqlRequest(LibSqlOp.Execute, updateQtySql, updateQtyArgs);
+        await connection.Execute([updateQtyRequest]);
+
     }
     public void UpdateProduct()
     {
@@ -54,4 +65,11 @@ public class InventoryProduct : Product
 {
     [ColumnName("inventory_id")]
     public string InventoryId { get; set; }
+    [ColumnName("quantity")]
+    public double Quantity { get; set; }
+
+    public void DisplayItemInfo()
+    {
+        Console.WriteLine($"Product Name: {ProductName}, Product Price: {ProductPrice}, Product Cost: {ProductCost}, Product Category: {ProductCategory}, Quantity: {Quantity}");
+    }
 }

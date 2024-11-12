@@ -25,14 +25,7 @@ public class Product
         }
         return productLine;
     }
-    public void SearchProduct()
-    {
 
-    }
-    public void SelectProduct()
-    {
-
-    }
     public static async Task ConfirmAdd(LibSqlConnection connection, Product newProduct)
     {
         var addSql = @"INSERT INTO Products (product_id, product_name, product_price, product_cost, product_category) VALUES (?,?,?,?,?) ";
@@ -50,8 +43,9 @@ public class Product
         await connection.Execute([addDataRequest]);
     }
     public static async Task ConfirmUpdate(LibSqlConnection connection, Product modifiedProduct)
+
     {
-        var updateSql = @"UPDATE Products SET product_name = ?, product_price = ?, product_cost = ?, product_category = ? WHERE product_id = ?";
+        var updateSql = @"UPDATE Products SET product_name = ?, product_price = ?, product_cost = ?, product_category = ?, WHERE product_id = ?";
 
         var updateArgs = new List<LibSqlArg>
         {
@@ -82,9 +76,19 @@ public class Product
         List<Product> foundProducts = products.FindAll(p => p.ProductId == ProductId);
         return foundProducts.Count;
     }
-    public void EnterProductQty()
+    public static double EnterQty()
     {
-
+        double newQuantity;
+        do
+        {
+            Console.Write("Enter quantity: ");
+            string qtyInput = Console.ReadLine() ?? string.Empty;
+            if (!double.TryParse(qtyInput, out newQuantity))
+            {
+                Logger.Error("Please enter a quantity");
+            }
+        } while (newQuantity <= 0);
+        return newQuantity;
     }
     public void DisplayProductCategory()
     {

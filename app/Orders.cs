@@ -112,10 +112,25 @@ public class BackOrder : Order
   {
 
   }
-  public void ConfirmBackOrder()
+  public static async Task ConfirmBackOrder(LibSqlConnection connection, List<InventoryProduct> newBackOrder)
   {
+    double backOrderTotal = 0;
+    foreach (var item in newBackOrder)
+    {
+      backOrderTotal += item.ProductPrice;
+    }
+    var addSql = @"INSERT INTO Orders (order_id, order_type, order_status, order_total) VALUES (?,'backorder','in progress',?) ";
 
+    var addArgs = new List<LibSqlArg>
+        {
+            new LibSqlArg(Guid.NewGuid().ToString()),
+            new LibSqlArg(backOrderTotal)
+
+        };
+    var addDataRequest = new LibSqlRequest(LibSqlOp.Execute, addSql, addArgs);
+    await connection.Execute([addDataRequest]);
   }
+
   public override void SelectProduct()
   {
 

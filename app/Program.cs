@@ -3,7 +3,7 @@
 class Program
 {
     static readonly Menu MenuOption = new(["1. Inventory", "2. Orders", "3. Sales Forecasts", "4. Exit"]);
-    static readonly Menu InventoryOption = new(["1. Display Inventory", "2. Add New Product", "3. Modify Existing Product", "4. Remove Product", "5. Go Back", "6. Exit"]);
+    static readonly Menu InventoryOption = new(["1. Display Inventory", "2. Update Inventory", "3. Add New Product", "4. Modify Existing Product", "5. Remove Product", "6. Go Back", "7. Exit"]);
     static readonly Menu OrderOption = new(["1. Display Order List", "2. Customer Orders", "3. Backorders", "4. Create Backorder", "5. Go Back", "6. Exit"]);
     static readonly Menu ForecastOption = new(["1. Create Forecast", "2. Display Past Forecasts", "3. Go Back", "4. Exit"]);
     static async Task Main(string[] args)
@@ -56,31 +56,36 @@ class Program
                             await system.DisplayInventory();
                             break;
                         case "2":
+                            Console.WriteLine("\nYou Selected Update Inventory");
+                            var inventoryQty = await system.DisplayInventory();
+                            var itemToUpdate = system.SelectInventoryItem(inventoryQty.ToList());
+                            double updatedQty = system.updateQty(itemToUpdate);
+                            await system.ConfirmUpdateQty(itemToUpdate, updatedQty);
+                            break;
+                        case "3":
                             Console.WriteLine("\nYou Selected Add New Product");
 
                             var newProduct = system.CreateNewProduct();
                             await system.ConfirmAdd(newProduct);
-                            await Inventory.AddProduct(connection, newProduct);
-
                             break;
-                        case "3":
+                        case "4":
                             Console.WriteLine("\nYou Selected Modify Existing Product");
                             var productLineM = await system.DisplayProductLine();
                             var productToModify = system.SelectProduct(productLineM.ToList());
                             var modifiedProduct = system.ModifyProduct(productToModify);
                             await system.ConfirmModification(modifiedProduct);
                             break;
-                        case "4":
+                        case "5":
                             Console.WriteLine("\nYou Selected Remove Product");
                             var productLineR = await system.DisplayProductLine();
                             var productToRemove = system.SelectProduct(productLineR.ToList());
                             var RemovedProduct = system.RemoveProduct(productToRemove);
                             await system.ConfirmRemoval(RemovedProduct);
                             break;
-                        case "5":
+                        case "6":
                             Console.WriteLine("\nReturning to Previous Menu...");
                             break;
-                        case "6":
+                        case "7":
                             Console.WriteLine("\nExiting...");
                             exit = true;
                             break;
@@ -107,6 +112,7 @@ class Program
                             break;
                         case "4":
                             Console.WriteLine("\nCreating Backorder");
+                            await system.CreateBackOrder();
                             break;
                         case "5":
                             Console.WriteLine("\nReturning to Previous Menu...");

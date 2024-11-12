@@ -71,7 +71,8 @@ CREATE TABLE Products (
 );
 CREATE TABLE Inventory ( 
     inventory_id TEXT PRIMARY KEY UNIQUE,
-    product_id,
+    product_id NOT NULL,
+    quantity INTEGER NOT NULL,
     FOREIGN KEY (product_id) REFERENCES Products(product_id) ON DELETE CASCADE
     );
 CREATE TABLE OrderProducts (
