@@ -157,6 +157,7 @@ public class FleurCoSystem
                     await Product.ConfirmAdd(Connection, newProduct);
                     await Inventory.AddProduct(Connection, newProduct);
                     Logger.Success("New product was successfully added");
+                    running = false;
                     break;
 
 
@@ -287,11 +288,11 @@ public class FleurCoSystem
         return modifiedProduct;
     }
 
-    public async Task<Product?> ConfirmModification(Product modifiedProduct)
+    public async Task ConfirmModification(Product modifiedProduct)
     {
         string userConfirmation;
-
-        while (true)
+        var running = true;
+        while (running)
         {
 
             Console.Write($"\nAre you sure you want to modify this product? \nPress [Y] for Yes, Press [N] for No: ");
@@ -304,8 +305,8 @@ public class FleurCoSystem
                 case "YES":
                     await Product.ConfirmUpdate(Connection, modifiedProduct);
                     Logger.Success("Product was successfully modified");
-
-                    return modifiedProduct;
+                    running = false;
+                    break;
 
 
 
@@ -314,7 +315,8 @@ public class FleurCoSystem
                     {
                         Logger.Warning("Product modification was cancelled");
 
-                        return null;
+                        running = false;
+                        break;
                     }
                 default:
 
@@ -334,11 +336,12 @@ public class FleurCoSystem
         return productToRemove;
 
     }
-    public async Task<Product?> ConfirmRemoval(Product productToRemove)
+    public async Task ConfirmRemoval(Product productToRemove)
     {
         string userConfirmation;
 
-        while (true)
+        var running = true;
+        while (running)
         {
 
             Console.Write($"\nAre you sure you want to remove this product? \nPress [Y] for Yes, Press [N] for No: ");
@@ -352,7 +355,8 @@ public class FleurCoSystem
                     await Product.ConfirmRemoval(Connection, productToRemove);
                     Logger.Success("Product was successfully removed");
 
-                    return productToRemove;
+                    running = false;
+                    break;
 
 
 
@@ -361,7 +365,8 @@ public class FleurCoSystem
                     {
                         Logger.Warning("Product removal was cancelled");
 
-                        return null;
+                         running = false;
+                         break;
                     }
                 default:
 
@@ -449,12 +454,13 @@ public class FleurCoSystem
 
     }
     private List<InventoryProduct> newBackOrder = new List<InventoryProduct>();
-    public async Task<InventoryProduct?> CreateBackOrder()
+    public async Task CreateBackOrder()
     {
-        while (true)
+        var running = true;
+        while (running)
         {
             CreateBackOrderOption.ShowOptions();
-            Console.WriteLine("\n Select Backorder Option: ");
+            Console.Write("\nSelect Backorder Option: ");
             switch (Console.ReadLine())
             {
                 case "1":
@@ -462,7 +468,6 @@ public class FleurCoSystem
                     var itemForBackorder = SelectInventoryItem(backOrderInventory.ToList());
                     newBackOrder = AddToBackOrder(itemForBackorder);
                     Logger.Success("Item Added To Backorder");
-
                     break;
                 case "2":
                     foreach (var item in newBackOrder)
@@ -473,12 +478,13 @@ public class FleurCoSystem
 
                 case "3":
 
-                    await ConfirmBackOrder(newBackOrder);
-                    Logger.Success("Backorder Saved");
+                    var confirmedBackOrder = await ConfirmBackOrder(newBackOrder);
+                    running = false;
                     break;
                 case "4":
                     Logger.Warning("Backorder Cancelled");
-                    return null;
+                    running = false;
+                    break;
                 default:
                     Logger.Error("Invalid Option, Please Try Again");
                     break;
@@ -498,7 +504,8 @@ public class FleurCoSystem
     {
         string userConfirmation;
 
-        while (true)
+        var running = true;
+        while (running)
         {
 
             Console.Write($"\nDo you want to save this backorder? \nPress [Y] for Yes, Press [N] for No: ");
@@ -511,7 +518,7 @@ public class FleurCoSystem
                 case "YES":
                     await BackOrder.ConfirmBackOrder(Connection, newBackOrder);
                     Logger.Success("Backorder was successfully created");
-
+                    running = false;
                     return newBackOrder;
 
 
@@ -520,6 +527,7 @@ public class FleurCoSystem
                 case "NO":
                     {
                         Logger.Warning("Backorder creation cancelled");
+                        running = false;
                         return null;
                     }
                 default:
@@ -531,6 +539,7 @@ public class FleurCoSystem
             }
 
         }
+        return null;
     }
     public void SelectFleurCoSystem()
     {

@@ -72,15 +72,15 @@ class Program
                             Console.WriteLine("\nYou Selected Modify Existing Product");
                             var productLineM = await system.DisplayProductLine();
                             var productToModify = system.SelectProduct(productLineM.ToList());
-                            var modifiedProduct = system.ModifyProduct(productToModify);
-                            await system.ConfirmModification(modifiedProduct);
+                            system.ModifyProduct(productToModify);
+                            await system.ConfirmModification(productToModify);
                             break;
                         case "5":
                             Console.WriteLine("\nYou Selected Remove Product");
                             var productLineR = await system.DisplayProductLine();
                             var productToRemove = system.SelectProduct(productLineR.ToList());
-                            var RemovedProduct = system.RemoveProduct(productToRemove);
-                            await system.ConfirmRemoval(RemovedProduct);
+                            var removedProduct = system.RemoveProduct(productToRemove);
+                            await system.ConfirmRemoval(removedProduct);
                             break;
                         case "6":
                             Console.WriteLine("\nReturning to Previous Menu...");
