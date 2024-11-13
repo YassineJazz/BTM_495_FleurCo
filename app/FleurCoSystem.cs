@@ -365,8 +365,8 @@ public class FleurCoSystem
                     {
                         Logger.Warning("Product removal was cancelled");
 
-                         running = false;
-                         break;
+                        running = false;
+                        break;
                     }
                 default:
 
