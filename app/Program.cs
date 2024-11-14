@@ -101,17 +101,20 @@ class Program
                         case "1":
                             Console.WriteLine("\nDisplaying Order List:");
                             var orderList = await system.DisplayOrderList();
-                            system.SelectOrder(orderList.ToList());
+                            var selectedOrder = system.SelectOrder(orderList.ToList());
+                            await system.DisplaySelectedOrder(selectedOrder);
                             break;
                         case "2":
                             Console.WriteLine("\nYou Selected Customer Orders");
                             var customerOrderList = await system.DisplayCustomerOrders();
-                            system.SelectOrder(customerOrderList.ToList());
+                            var selectedCustomerOrder = system.SelectOrder(customerOrderList.ToList());
+                            await system.DisplaySelectedOrder(selectedCustomerOrder);
                             break;
                         case "3":
                             Console.WriteLine("\nYou Selected Backorders");
                             var backOrderList = await system.DisplayBackOrders();
-                            system.SelectOrder(backOrderList.ToList());
+                            var selectedBackOrder = system.SelectOrder(backOrderList.ToList());
+                            await system.DisplaySelectedOrder(selectedBackOrder);
                             break;
                         case "4":
                             Console.WriteLine("\nCreating Backorder");

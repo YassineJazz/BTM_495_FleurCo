@@ -43,6 +43,76 @@ public class FleurCoSystem
         }
         return products;
     }
+    public async Task<Rows<OrderProduct>> DisplayOrderList()
+    {
+        var orderList = await Order.DisplayOrderList(Connection);
+        int index = 1;
+        foreach (var order in orderList)
+        {
+            Console.WriteLine
+            (@$"{index}. Order Type: {order.OrderType}, 
+            Order Status: {order.OrderStatus:C},  
+            Order Total: {order.OrderTotal:C},");
+            index++;
+        }
+        return orderList;
+    }
+
+    public async Task<Rows<OrderProduct>> DisplayCustomerOrders()
+    {
+        var customerOrderList = await Order.DisplayCustomerOrders(Connection);
+        int index = 1;
+        foreach (var order in customerOrderList)
+        {
+            Console.WriteLine
+            (@$"{index}. Order Type: {order.OrderType}, 
+            Order Status: {order.OrderStatus:C},  
+            Order Total: {order.OrderTotal:C},");
+            index++;
+        }
+        return customerOrderList;
+    }
+    public async Task<Rows<OrderProduct>> DisplayBackOrders()
+    {
+        var backOrderList = await Order.DisplayBackOrders(Connection);
+        int index = 1;
+        foreach (var order in backOrderList)
+        {
+            Console.WriteLine
+            (@$"{index}. Order Type: {order.OrderType}, 
+            Order Status: {order.OrderStatus:C},  
+            Order Total: {order.OrderTotal:C},");
+            index++;
+        }
+        return backOrderList;
+    }
+    public async Task DisplaySelectedOrder(OrderProduct orderToSelect)
+    {
+        var selectedOrder = await Order.DisplaySelectedOrder(Connection, orderToSelect);
+        var index = 1;
+
+        while (index > 0)
+        {
+            foreach (var order in selectedOrder)
+            {
+                Console.WriteLine
+                ($"\nOrder ID: {order.OrderId}. Order Type: {order.OrderType}, Order Status: {order.OrderStatus},  Order Total: {order.OrderTotal:C},");
+                Console.WriteLine("\nList of items in this order: \n");
+                index--;
+                break;
+            }
+        }
+
+        foreach (var item in selectedOrder)
+        {
+            Console.WriteLine(@$"Item Name: {item.ProductName}, 
+                Item Cost: {item.ProductCost}, 
+                Item Category: {item.ProductCategory}, 
+                Item Quantity: {item.ProductQuantity}");
+        }
+
+
+    }
 
     public void SearchProduct()
     {
@@ -85,6 +155,25 @@ public class FleurCoSystem
         var selectedItem = items[chosenIndex];
 
         return selectedItem;
+    }
+    public OrderProduct SelectOrder(List<OrderProduct> orders)
+    {
+        int chosenIndex;
+        do
+        {
+            Console.Write("Enter the index of the order to select: ");
+            string indexInput = Console.ReadLine() ?? string.Empty;
+            if (int.TryParse(indexInput, out chosenIndex) && chosenIndex > 0 && chosenIndex <= orders.Count)
+            {
+                chosenIndex--;
+                break;
+
+            }
+            Logger.Error("Please enter a valid product index: ");
+        } while (true);
+        var selectedOrder = orders[chosenIndex];
+
+        return selectedOrder;
     }
 
     public Product CreateNewProduct()
@@ -385,70 +474,6 @@ public class FleurCoSystem
     public void SelectForecastCriteria()
     {
 
-    }
-
-    public async Task<Rows<Order>> DisplayOrderList()
-    {
-        var orderList = await Order.DisplayOrderList(Connection);
-        int index = 1;
-        foreach (var order in orderList)
-        {
-            Console.WriteLine
-            (@$"{index}. Order Type: {order.OrderType}, 
-            Order Status: {order.OrderStatus:C},  
-            Order Total: {order.OrderTotal:C},");
-            index++;
-        }
-        return orderList;
-    }
-
-
-    public Order SelectOrder(List<Order> orders)
-    {
-        int chosenIndex;
-        do
-        {
-            Console.Write("Enter the index of the order to select: ");
-            string indexInput = Console.ReadLine() ?? string.Empty;
-            if (int.TryParse(indexInput, out chosenIndex) && chosenIndex > 0 && chosenIndex <= orders.Count)
-            {
-                chosenIndex--;
-                break;
-
-            }
-            Logger.Error("Please enter a valid product index: ");
-        } while (true);
-        var selectedOrder = orders[chosenIndex];
-
-        return selectedOrder;
-    }
-    public async Task<Rows<Order>> DisplayCustomerOrders()
-    {
-        var customerOrderList = await Order.DisplayCustomerOrders(Connection);
-        int index = 1;
-        foreach (var order in customerOrderList)
-        {
-            Console.WriteLine
-            (@$"{index}. Order Type: {order.OrderType}, 
-            Order Status: {order.OrderStatus:C},  
-            Order Total: {order.OrderTotal:C},");
-            index++;
-        }
-        return customerOrderList;
-    }
-    public async Task<Rows<Order>> DisplayBackOrders()
-    {
-        var backOrderList = await Order.DisplayBackOrders(Connection);
-        int index = 1;
-        foreach (var order in backOrderList)
-        {
-            Console.WriteLine
-            (@$"{index}. Order Type: {order.OrderType}, 
-            Order Status: {order.OrderStatus:C},  
-            Order Total: {order.OrderTotal:C},");
-            index++;
-        }
-        return backOrderList;
     }
     public void SelectProductToScan()
     {

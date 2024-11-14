@@ -3,7 +3,7 @@ using LibSql;
 public class Order
 {
 
-  [ColumnName("order_id")] public string OrderID { get; set; }
+  [ColumnName("order_id")] public string OrderId { get; set; }
   public List<Product> Products { get; set; }
   [ColumnName("order_type")] public string OrderType { get; set; }
   [ColumnName("order_status")] public string OrderStatus { get; set; }
@@ -22,42 +22,53 @@ public class Order
     OrderTotal = total;
   }
 
-  public static async Task<Rows<Order>> DisplayOrderList(LibSqlConnection connection)
+  public static async Task<Rows<OrderProduct>> DisplayOrderList(LibSqlConnection connection)
   {
     var orderSql = "SELECT * FROM Orders";
     var orderDataRequest = new LibSqlRequest(LibSqlOp.Execute, orderSql);
-    var orders = await connection.Query<Order>([orderDataRequest]);
+    var orders = await connection.Query<OrderProduct>([orderDataRequest]);
     if (orders == null)
     {
       throw new InvalidOperationException("No Orders Found");
     }
     return orders;
   }
-  public static async Task<Rows<Order>> DisplayCustomerOrders(LibSqlConnection connection)
+  public static async Task<Rows<OrderProduct>> DisplayCustomerOrders(LibSqlConnection connection)
   {
     var orderSql = "SELECT * FROM Orders WHERE order_type = 'customer'";
     var orderDataRequest = new LibSqlRequest(LibSqlOp.Execute, orderSql);
-    var orders = await connection.Query<Order>([orderDataRequest]);
+    var orders = await connection.Query<OrderProduct>([orderDataRequest]);
     if (orders == null)
     {
       throw new InvalidOperationException("No Customer Orders Found");
     }
     return orders;
   }
-  public static async Task<Rows<Order>> DisplayBackOrders(LibSqlConnection connection)
+  public static async Task<Rows<OrderProduct>> DisplayBackOrders(LibSqlConnection connection)
   {
     var orderSql = "SELECT * FROM Orders WHERE order_type = 'backorder'";
     var orderDataRequest = new LibSqlRequest(LibSqlOp.Execute, orderSql);
-    var orders = await connection.Query<Order>([orderDataRequest]);
+    var orders = await connection.Query<OrderProduct>([orderDataRequest]);
     if (orders == null)
     {
       throw new InvalidOperationException("No Orders Backorders Found");
     }
     return orders;
   }
-  public void DisplayOrderOverview()
+  public static async Task<Rows<OrderProduct>> DisplaySelectedOrder(LibSqlConnection connection, OrderProduct orderToSelect)
   {
-
+    var selectedOrderSql = "SELECT Orders.*, OrderProducts.product_qty, Products.* FROM Orders JOIN OrderProducts ON Orders.order_id = OrderProducts.order_id JOIN Products on OrderProducts.product_id = Products.product_id WHERE Orders.order_id = ?";
+    var selectedOrderArgs = new List<LibSqlArg>
+        {
+            new LibSqlArg(orderToSelect.OrderId)
+        };
+    var selectedOrderDataRequest = new LibSqlRequest(LibSqlOp.Execute, selectedOrderSql, selectedOrderArgs);
+    var selectedOrder = await connection.Query<OrderProduct>([selectedOrderDataRequest]);
+    if (selectedOrder == null)
+    {
+      throw new InvalidOperationException("No Selected Order To Display");
+    }
+    return selectedOrder;
   }
   public virtual void SelectProduct()
   {
@@ -76,19 +87,22 @@ public class Order
 
   }
 }
-public class OrderProduct
+public class OrderProduct : Order
 {
-  public string OrderID { get; set; }
-  public string ProductID { get; set; }
-  public int ProductQuantity { get; set; }
-
-  public OrderProduct(string orderid, string productid, int productquantity)
-  {
-    OrderID = orderid;
-    ProductID = productid;
-    ProductQuantity = productquantity;
-  }
+  [ColumnName("product_id")]
+  public string ProductId { get; set; }
+  [ColumnName("product_name")]
+  public string ProductName { get; set; }
+  [ColumnName("product_price")]
+  public double ProductPrice { get; set; }
+  [ColumnName("product_cost")]
+  public double ProductCost { get; set; }
+  [ColumnName("product_category")]
+  public string ProductCategory { get; set; }
+  [ColumnName("product_qty")]
+  public double ProductQuantity { get; set; }
 }
+
 
 public class CustomerOrder : Order
 {
@@ -119,7 +133,7 @@ public class BackOrder : Order
     double backOrderTotal = 0;
     foreach (var item in newBackOrder)
     {
-      backOrderTotal += item.ProductPrice * item.Quantity;
+      backOrderTotal += item.ProductCost * item.Quantity;
     }
     var addOrderSql = @"INSERT INTO Orders (order_id, order_type, order_status, order_total) VALUES (?,'backorder','in progress',?) ";
 
