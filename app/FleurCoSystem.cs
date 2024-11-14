@@ -52,7 +52,7 @@ public class FleurCoSystem
             Console.WriteLine
             (@$"{index}. Order Type: {order.OrderType}, 
             Order Status: {order.OrderStatus:C},  
-            Order Total: {order.OrderTotal:C},");
+            Order Cost: {order.OrderTotal:C},");
             index++;
         }
         return orderList;
@@ -67,7 +67,7 @@ public class FleurCoSystem
             Console.WriteLine
             (@$"{index}. Order Type: {order.OrderType}, 
             Order Status: {order.OrderStatus:C},  
-            Order Total: {order.OrderTotal:C},");
+            Order Cost: {order.OrderTotal:C},");
             index++;
         }
         return customerOrderList;
@@ -81,7 +81,7 @@ public class FleurCoSystem
             Console.WriteLine
             (@$"{index}. Order Type: {order.OrderType}, 
             Order Status: {order.OrderStatus:C},  
-            Order Total: {order.OrderTotal:C},");
+            Order Cost: {order.OrderTotal:C},");
             index++;
         }
         return backOrderList;
@@ -96,7 +96,7 @@ public class FleurCoSystem
             foreach (var order in selectedOrder)
             {
                 Console.WriteLine
-                ($"\nOrder ID: {order.OrderId}. Order Type: {order.OrderType}, Order Status: {order.OrderStatus},  Order Total: {order.OrderTotal:C},");
+                ($"\nOrder ID: {order.OrderId}. Order Type: {order.OrderType}, Order Status: {order.OrderStatus},  Order Cost: {order.OrderTotal:C},");
                 Console.WriteLine("\nList of items in this order: \n");
                 index--;
                 break;
