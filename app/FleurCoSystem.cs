@@ -287,11 +287,11 @@ public class FleurCoSystem
         return newQuanity;
     }
 
-    public async Task<Product?> ConfirmUpdateQty(InventoryProduct itemToUpdate, double newQuantity)
+    public async Task ConfirmUpdateQty(InventoryProduct itemToUpdate, double newQuantity)
     {
         string userConfirmation;
-
-        while (true)
+        var running = true;
+        while (running)
         {
 
             Console.Write($"\nSave Changes? \nPress [Y] for Yes, Press [N] for No: ");
@@ -304,7 +304,8 @@ public class FleurCoSystem
                 case "YES":
                     await Inventory.ConfirmUpdateQty(Connection, itemToUpdate, newQuantity);
                     Logger.Success("Quantity was successfully updated");
-                    return itemToUpdate;
+                    running = false;
+                    break;
 
 
 
@@ -312,8 +313,8 @@ public class FleurCoSystem
                 case "NO":
                     {
                         Logger.Warning("Quantity Changes were cancelled");
-
-                        return null;
+                        running = false;
+                        break;
                     }
                 default:
 
