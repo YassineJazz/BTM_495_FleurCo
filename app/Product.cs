@@ -45,7 +45,7 @@ public class Product
     public static async Task ConfirmUpdate(LibSqlConnection connection, Product modifiedProduct)
 
     {
-        var updateSql = @"UPDATE Products SET product_name = ?, product_price = ?, product_cost = ?, product_category = ?, WHERE product_id = ?";
+        var updateSql = @"UPDATE Products SET product_name = ?, product_price = ?, product_cost = ?, product_category = ? WHERE product_id = ?";
 
         var updateArgs = new List<LibSqlArg>
         {

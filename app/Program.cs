@@ -72,8 +72,8 @@ class Program
                             Console.WriteLine("\nYou Selected Modify Existing Product");
                             var productLineM = await system.DisplayProductLine();
                             var productToModify = system.SelectProduct(productLineM.ToList());
-                            system.ModifyProduct(productToModify);
-                            await system.ConfirmModification(productToModify);
+                            var modifiedProduct = system.ModifyProduct(productToModify);
+                            await system.ConfirmModification(modifiedProduct);
                             break;
                         case "5":
                             Console.WriteLine("\nYou Selected Remove Product");
