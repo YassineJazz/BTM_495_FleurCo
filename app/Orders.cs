@@ -90,7 +90,7 @@ public class OrderProduct
   }
 }
 
-public class NewOrder : Order
+public class CustomerOrder : Order
 {
   public string CustomerID { get; set; }
   public string WorkerID { get; set; }
@@ -114,23 +114,49 @@ public class BackOrder : Order
   }
   public static async Task ConfirmBackOrder(LibSqlConnection connection, List<InventoryProduct> newBackOrder)
   {
+    var newOrderGuid = Guid.NewGuid().ToString();
+
     double backOrderTotal = 0;
     foreach (var item in newBackOrder)
     {
-      backOrderTotal += item.ProductPrice;
+      backOrderTotal += item.ProductPrice * item.Quantity;
     }
-    var addSql = @"INSERT INTO Orders (order_id, order_type, order_status, order_total) VALUES (?,'backorder','in progress',?) ";
+    var addOrderSql = @"INSERT INTO Orders (order_id, order_type, order_status, order_total) VALUES (?,'backorder','in progress',?) ";
 
-    var addArgs = new List<LibSqlArg>
+    var addOrderArgs = new List<LibSqlArg>
         {
-            new LibSqlArg(Guid.NewGuid().ToString()),
+            new LibSqlArg(newOrderGuid),
             new LibSqlArg(backOrderTotal)
 
         };
-    var addDataRequest = new LibSqlRequest(LibSqlOp.Execute, addSql, addArgs);
-    await connection.Execute([addDataRequest]);
-  }
+    var addOrderDataRequest = new LibSqlRequest(LibSqlOp.Execute, addOrderSql, addOrderArgs);
+    await connection.Execute([addOrderDataRequest]);
 
+    foreach (var item in newBackOrder)
+    {
+      var addOrderProductSql = @"INSERT INTO OrderProducts (order_id, product_id, product_qty) VALUES (?,?,?) ";
+      var addOrderProductArgs = new List<LibSqlArg>
+        {
+            new LibSqlArg(newOrderGuid),
+            new LibSqlArg(item.ProductId),
+            new LibSqlArg(item.Quantity)
+
+        };
+      var addOrderProductDataRequest = new LibSqlRequest(LibSqlOp.Execute, addOrderProductSql, addOrderProductArgs);
+      await connection.Execute([addOrderProductDataRequest]);
+    }
+
+    var addBackOrderSql = @"INSERT INTO BackOrders (backorder_id, whm_id, user_id, backorder_cost) VALUES (?,'1','1',?) ";
+
+    var addBackOrderArgs = new List<LibSqlArg>
+        {
+            new LibSqlArg(newOrderGuid),
+            new LibSqlArg(backOrderTotal)
+
+        };
+    var addBackOrderDataRequest = new LibSqlRequest(LibSqlOp.Execute, addBackOrderSql, addBackOrderArgs);
+    await connection.Execute([addBackOrderDataRequest]);
+  }
   public override void SelectProduct()
   {
 

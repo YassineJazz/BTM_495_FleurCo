@@ -182,13 +182,13 @@ public class FleurCoSystem
 
     }
 
-    public double updateQty(InventoryProduct itemToUpdate)
+    public double EnterQty(InventoryProduct item)
     {
-        itemToUpdate.DisplayItemInfo();
+        item.DisplayItemInfo();
         double newQuanity;
         do
         {
-            Console.Write("Enter New Quantity: ");
+            Console.Write("Enter Quantity: ");
             var qtyInput = Console.ReadLine() ?? string.Empty;
             if (!double.TryParse(qtyInput, out newQuanity))
             {
@@ -386,52 +386,69 @@ public class FleurCoSystem
     {
 
     }
-    public async Task DisplayOrderList()
-    {
 
+    public async Task<Rows<Order>> DisplayOrderList()
+    {
         var orderList = await Order.DisplayOrderList(Connection);
+        int index = 1;
         foreach (var order in orderList)
         {
             Console.WriteLine
-            (@$"- Order ID: {order.OrderID}, 
-            Order Type: {order.OrderType}, 
-            Order Status: {order.OrderStatus}, 
-            Order Total: {order.OrderTotal:C}");
+            (@$"{index}. Order Type: {order.OrderType}, 
+            Order Status: {order.OrderStatus:C},  
+            Order Total: {order.OrderTotal:C},");
+            index++;
         }
-
+        return orderList;
     }
 
-    public void SelectOrder()
+
+    public Order SelectOrder(List<Order> orders)
     {
+        int chosenIndex;
+        do
+        {
+            Console.Write("Enter the index of the order to select: ");
+            string indexInput = Console.ReadLine() ?? string.Empty;
+            if (int.TryParse(indexInput, out chosenIndex) && chosenIndex > 0 && chosenIndex <= orders.Count)
+            {
+                chosenIndex--;
+                break;
 
+            }
+            Logger.Error("Please enter a valid product index: ");
+        } while (true);
+        var selectedOrder = orders[chosenIndex];
+
+        return selectedOrder;
     }
-    public async Task DisplayCustomerOrder()
+    public async Task<Rows<Order>> DisplayCustomerOrders()
     {
         var customerOrderList = await Order.DisplayCustomerOrders(Connection);
+        int index = 1;
         foreach (var order in customerOrderList)
         {
             Console.WriteLine
-            (@$"- Order ID: {order.OrderID}, 
-            Order Type: {order.OrderType}, 
-            Order Status: {order.OrderStatus}, 
-            Order Total: {order.OrderTotal:C}");
+            (@$"{index}. Order Type: {order.OrderType}, 
+            Order Status: {order.OrderStatus:C},  
+            Order Total: {order.OrderTotal:C},");
+            index++;
         }
-
-
+        return customerOrderList;
     }
-    public async Task DisplayBackOrder()
+    public async Task<Rows<Order>> DisplayBackOrders()
     {
         var backOrderList = await Order.DisplayBackOrders(Connection);
+        int index = 1;
         foreach (var order in backOrderList)
         {
             Console.WriteLine
-            (@$"- Order ID: {order.OrderID}, 
-            Order Type: {order.OrderType}, 
-            Order Status: {order.OrderStatus},
-            Order Total: {order.OrderTotal:C}");
+            (@$"{index}. Order Type: {order.OrderType}, 
+            Order Status: {order.OrderStatus:C},  
+            Order Total: {order.OrderTotal:C},");
+            index++;
         }
-
-
+        return backOrderList;
     }
     public void SelectProductToScan()
     {
@@ -466,19 +483,24 @@ public class FleurCoSystem
                 case "1":
                     var backOrderInventory = await DisplayInventory();
                     var itemForBackorder = SelectInventoryItem(backOrderInventory.ToList());
-                    newBackOrder = AddToBackOrder(itemForBackorder);
+                    var itemQuantity = EnterQty(itemForBackorder);
+                    newBackOrder = AddToBackOrder(itemForBackorder, itemQuantity);
                     Logger.Success("Item Added To Backorder");
                     break;
                 case "2":
                     foreach (var item in newBackOrder)
                     {
-                        Console.WriteLine($"Product Name: {item.ProductName}, Product Price: {item.ProductPrice}, Product Cost: {item.ProductCost}, Product Category: {item.ProductCategory},");
+                        Console.WriteLine(
+                        $@"Product Name: {item.ProductName}, 
+                        Product Price: {item.ProductPrice}, 
+                        Product Cost: {item.ProductCost}, 
+                        Product Category: {item.ProductCategory}, 
+                        Quantity: {item.Quantity},");
                     }
                     break;
 
                 case "3":
-
-                    var confirmedBackOrder = await ConfirmBackOrder(newBackOrder);
+                    await ConfirmBackOrder(newBackOrder);
                     running = false;
                     break;
                 case "4":
@@ -491,14 +513,11 @@ public class FleurCoSystem
             }
         }
     }
-    public List<InventoryProduct> AddToBackOrder(InventoryProduct item)
+    public List<InventoryProduct> AddToBackOrder(InventoryProduct item, double qty)
     {
+        item.Quantity = qty;
         newBackOrder.Add(item);
         return newBackOrder;
-    }
-    public void EnterProductQty()
-    {
-
     }
     public async Task<List<InventoryProduct>?> ConfirmBackOrder(List<InventoryProduct> newBackOrder)
     {

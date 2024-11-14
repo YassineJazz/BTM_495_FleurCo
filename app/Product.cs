@@ -76,20 +76,6 @@ public class Product
         List<Product> foundProducts = products.FindAll(p => p.ProductId == ProductId);
         return foundProducts.Count;
     }
-    public static double EnterQty()
-    {
-        double newQuantity;
-        do
-        {
-            Console.Write("Enter quantity: ");
-            string qtyInput = Console.ReadLine() ?? string.Empty;
-            if (!double.TryParse(qtyInput, out newQuantity))
-            {
-                Logger.Error("Please enter a quantity");
-            }
-        } while (newQuantity <= 0);
-        return newQuantity;
-    }
     public void DisplayProductCategory()
     {
 

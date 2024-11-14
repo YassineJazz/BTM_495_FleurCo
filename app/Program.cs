@@ -59,7 +59,7 @@ class Program
                             Console.WriteLine("\nYou Selected Update Inventory");
                             var inventoryQty = await system.DisplayInventory();
                             var itemToUpdate = system.SelectInventoryItem(inventoryQty.ToList());
-                            double updatedQty = system.updateQty(itemToUpdate);
+                            double updatedQty = system.EnterQty(itemToUpdate);
                             await system.ConfirmUpdateQty(itemToUpdate, updatedQty);
                             break;
                         case "3":
@@ -100,15 +100,18 @@ class Program
                     {
                         case "1":
                             Console.WriteLine("\nDisplaying Order List:");
-                            await system.DisplayOrderList();
+                            var orderList = await system.DisplayOrderList();
+                            system.SelectOrder(orderList.ToList());
                             break;
                         case "2":
                             Console.WriteLine("\nYou Selected Customer Orders");
-                            await system.DisplayCustomerOrder();
+                            var customerOrderList = await system.DisplayCustomerOrders();
+                            system.SelectOrder(customerOrderList.ToList());
                             break;
                         case "3":
                             Console.WriteLine("\nYou Selected Backorders");
-                            await system.DisplayBackOrder();
+                            var backOrderList = await system.DisplayBackOrders();
+                            system.SelectOrder(backOrderList.ToList());
                             break;
                         case "4":
                             Console.WriteLine("\nCreating Backorder");

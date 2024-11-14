@@ -44,8 +44,8 @@ CREATE TABLE Orders (
     order_total REAL
 );
 
-CREATE TABLE NewOrders (
-    neworder_id INTEGER,
+CREATE TABLE CustomerOrders (
+    customerorder_id TEXT,
     customer_id INTEGER,
     whw_id INTEGER,
     FOREIGN KEY (neworder_id) REFERENCES Orders(order_id),
@@ -54,12 +54,12 @@ CREATE TABLE NewOrders (
 );
 
 CREATE TABLE BackOrders (
-  backorder_id INTEGER,
+  backorder_id TEXT,
     whm_id INTEGER,
     user_id INTEGER,
     backorder_cost REAL,
-     FOREIGN KEY (whm_id) REFERENCES Users(user_id),
-    FOREIGN KEY (backorder_id) REFERENCES Orders(order_id)
+    FOREIGN KEY (whm_id) REFERENCES Users(user_id),
+    FOREIGN KEY (backorder_id) REFERENCES Orders(order_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Products (
@@ -79,7 +79,7 @@ CREATE TABLE OrderProducts (
     order_id INTEGER,
     product_id INTEGER,
     product_qty INTEGER,
-    FOREIGN KEY (order_id) REFERENCES Orders(order_id),
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES Products(product_id)
 );
 
