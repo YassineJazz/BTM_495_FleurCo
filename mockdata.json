@@ -1,0 +1,19 @@
+{
+    "Product": {
+        "productName": "FOREST",
+        "productPrice": 100,
+        "productCost": 50,
+        "productCategory": "Shower Doors"
+    },
+    "Backorder": [
+        {
+            "inventoryId": "353e35f2-03f3-4495-8124-ad58ce58aac0",
+            "quantity": 40,
+            "productId": "f1584e8b-9bc2-4f07-a30c-e66dd43f591d",
+            "productName": "HORIZON",
+            "productPrice": 200,
+            "productCost": 100,
+            "productCategory": "Handle"
+        }
+    ]
+}

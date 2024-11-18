@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BTM_495_FleurCo", "BTM_495_FleurCo.csproj", "{59DBDFAA-34DF-460C-B5FE-B3EF0795603E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FleurCoBlazor", "FleurCoBlazor\FleurCoBlazor.csproj", "{D4F20161-6ED0-4DFC-ADA5-3D99DF25DC99}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{59DBDFAA-34DF-460C-B5FE-B3EF0795603E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59DBDFAA-34DF-460C-B5FE-B3EF0795603E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59DBDFAA-34DF-460C-B5FE-B3EF0795603E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4F20161-6ED0-4DFC-ADA5-3D99DF25DC99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4F20161-6ED0-4DFC-ADA5-3D99DF25DC99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4F20161-6ED0-4DFC-ADA5-3D99DF25DC99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4F20161-6ED0-4DFC-ADA5-3D99DF25DC99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -39,6 +39,7 @@ CREATE TABLE Addresses (
 
 CREATE TABLE Orders (
     order_id TEXT PRIMARY KEY UNIQUE,
+    order_date DATETIME NOT NULL DEFAULT (datetime('now')),
     order_type TEXT,
     order_status TEXT,
     order_total REAL
@@ -55,8 +56,8 @@ CREATE TABLE CustomerOrders (
 
 CREATE TABLE BackOrders (
   backorder_id TEXT,
-    whm_id INTEGER,
-    user_id INTEGER,
+    whm_id TEXT NOT NULL,
+    backorder_date DATETIME NOT NULL DEFAULT (datetime('now')),
     backorder_cost REAL,
     FOREIGN KEY (whm_id) REFERENCES Users(user_id),
     FOREIGN KEY (backorder_id) REFERENCES Orders(order_id) ON DELETE CASCADE

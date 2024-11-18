@@ -218,6 +218,11 @@ public class LibSqlArg
             return intValue.ToString();
         }
 
+        if (value is DateTime dateValue)
+        {
+            return dateValue.ToString("yyyy-MM-dd HH:mm:ss");
+        }
+
         return value;
     }
 
@@ -235,6 +240,7 @@ public class LibSqlArg
             Type _ when type == typeof(string) => "text",
             Type _ when type == typeof(byte[]) => "blob",
             Type _ when type == typeof(Boolean) => "text",
+            Type _ when type == typeof(DateTime) => "text",
             _ => throw new ArgumentException($"Unsupported type: {type.Name}")
         };
 
