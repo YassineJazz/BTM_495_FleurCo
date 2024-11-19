@@ -3,3 +3,4 @@ bin
 .env
 .fake
 appsettings*.json
+node_modules

@@ -7,13 +7,16 @@
     },
     "Backorder": [
         {
-            "inventoryId": "353e35f2-03f3-4495-8124-ad58ce58aac0",
-            "quantity": 40,
-            "productId": "f1584e8b-9bc2-4f07-a30c-e66dd43f591d",
-            "productName": "HORIZON",
+            "inventoryId": "826a0fb2-13e0-409e-b253-45a35e303fef",
+            "quantity": 20,
+            "productId": "bef59a05-88b6-4f23-9fbd-06b9b290a527",
+            "productName": "ERINA",
             "productPrice": 200,
-            "productCost": 100,
-            "productCategory": "Handle"
+            "productCost": 150,
+            "productCategory": "Shower Doors"
         }
-    ]
+    ],
+    "Inventory": {
+        "quantity": 20
+    }
 }
