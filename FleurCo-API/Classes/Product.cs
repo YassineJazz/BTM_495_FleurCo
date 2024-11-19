@@ -21,7 +21,7 @@ namespace FleurCo_API.Classes
         {
             var productLineSql = "SELECT * FROM Products";
             var productLineDataRequest = new LibSqlRequest(LibSqlOp.Execute, productLineSql);
-            var productLine = await connection.Query<Product>([productLineDataRequest]);
+            var productLine = await connection.Query<Product>([productLineDataRequest, new(LibSqlOp.Close)]);
             if (productLine == null)
             {
                 throw new InvalidOperationException("No Products To Display");
@@ -37,7 +37,7 @@ namespace FleurCo_API.Classes
             new LibSqlArg(id)
         };
             var productDataRequest = new LibSqlRequest(LibSqlOp.Execute, productSql, productArgs);
-            var product = await connection.Query<Product>([productDataRequest]);
+            var product = await connection.Query<Product>([productDataRequest, new(LibSqlOp.Close)]);
             if (product == null)
             {
                 throw new InvalidOperationException("No Products To Display");
@@ -59,7 +59,7 @@ namespace FleurCo_API.Classes
 
         };
             var addDataRequest = new LibSqlRequest(LibSqlOp.Execute, addSql, addArgs);
-            await connection.Execute([addDataRequest]);
+            await connection.Execute([addDataRequest, new(LibSqlOp.Close)]);
         }
         public static async Task ConfirmUpdate(LibSqlConnection connection, Product modifiedProduct)
 
@@ -76,7 +76,7 @@ namespace FleurCo_API.Classes
 
         };
             var addDataRequest = new LibSqlRequest(LibSqlOp.Execute, updateSql, updateArgs);
-            await connection.Execute([addDataRequest]);
+            await connection.Execute([addDataRequest, new(LibSqlOp.Close)]);
         }
         public static async Task ConfirmDelete(LibSqlConnection connection, string productId)
         {
@@ -88,7 +88,7 @@ namespace FleurCo_API.Classes
 
         };
             var addDataRequest = new LibSqlRequest(LibSqlOp.Execute, deleteSql, deleteArgs);
-            await connection.Execute([addDataRequest]);
+            await connection.Execute([addDataRequest, new(LibSqlOp.Close)]);
         }
         // public int GetProductQty(List<Product> products)
         // {

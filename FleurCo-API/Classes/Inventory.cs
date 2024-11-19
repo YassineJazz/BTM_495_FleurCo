@@ -11,7 +11,7 @@ namespace FleurCo_API.Classes
         {
             var inventorySql = "SELECT inventory.inventory_id, products.*, inventory.quantity FROM inventory INNER JOIN products ON inventory.product_id = products.product_id";
             var inventoryDataRequest = new LibSqlRequest(LibSqlOp.Execute, inventorySql);
-            var inventory = await connection.Query<InventoryProduct>([inventoryDataRequest]);
+            var inventory = await connection.Query<InventoryProduct>([inventoryDataRequest, new(LibSqlOp.Close)]);
             if (inventory == null)
             {
                 throw new InvalidOperationException("No Inventory To Display");
@@ -27,7 +27,7 @@ namespace FleurCo_API.Classes
             new LibSqlArg(id)
         };
             var itemDataRequest = new LibSqlRequest(LibSqlOp.Execute, itemSql, itemArgs);
-            var item = await connection.Query<InventoryProduct>([itemDataRequest]);
+            var item = await connection.Query<InventoryProduct>([itemDataRequest, new(LibSqlOp.Close)]);
             if (item == null)
             {
                 throw new InvalidOperationException("No Items To Display");
@@ -42,7 +42,7 @@ namespace FleurCo_API.Classes
             var itemArgs = ids.Select(id => new LibSqlArg(id)).ToList();
 
             var itemDataRequest = new LibSqlRequest(LibSqlOp.Execute, itemSql, itemArgs);
-            var items = await connection.Query<InventoryProduct>([itemDataRequest]);
+            var items = await connection.Query<InventoryProduct>([itemDataRequest, new(LibSqlOp.Close)]);
             if (items == null)
             {
                 throw new InvalidOperationException("No Items To Display");
@@ -60,7 +60,7 @@ namespace FleurCo_API.Classes
             new LibSqlArg(newProduct.ProductId)
         };
             var addDataRequest = new LibSqlRequest(LibSqlOp.Execute, addSql, addArgs);
-            await connection.Execute([addDataRequest]);
+            await connection.Execute([addDataRequest, new(LibSqlOp.Close)]);
         }
         public static async Task ConfirmUpdateQty(LibSqlConnection connection, string id, double quantity)
         {
@@ -71,7 +71,7 @@ namespace FleurCo_API.Classes
             new LibSqlArg(id)
         };
             var updateQtyRequest = new LibSqlRequest(LibSqlOp.Execute, updateQtySql, updateQtyArgs);
-            await connection.Execute([updateQtyRequest]);
+            await connection.Execute([updateQtyRequest, new(LibSqlOp.Close)]);
 
 
         }

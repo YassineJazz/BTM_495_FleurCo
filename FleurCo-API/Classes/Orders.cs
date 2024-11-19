@@ -17,7 +17,7 @@ namespace FleurCo_API.Classes
     {
       var orderSql = "SELECT * FROM Orders";
       var orderDataRequest = new LibSqlRequest(LibSqlOp.Execute, orderSql);
-      var orders = await connection.Query<Order>([orderDataRequest]);
+      var orders = await connection.Query<Order>([orderDataRequest, new(LibSqlOp.Close)]);
       if (orders == null)
       {
         throw new InvalidOperationException("No Orders Found");
@@ -28,7 +28,7 @@ namespace FleurCo_API.Classes
     {
       var orderSql = "SELECT * FROM Orders WHERE order_type = 'customer'";
       var orderDataRequest = new LibSqlRequest(LibSqlOp.Execute, orderSql);
-      var orders = await connection.Query<Order>([orderDataRequest]);
+      var orders = await connection.Query<Order>([orderDataRequest, new(LibSqlOp.Close)]);
       if (orders == null)
       {
         throw new InvalidOperationException("No Customer Orders Found");
@@ -39,7 +39,7 @@ namespace FleurCo_API.Classes
     {
       var orderSql = "SELECT * FROM Orders WHERE order_type = 'backorder'";
       var orderDataRequest = new LibSqlRequest(LibSqlOp.Execute, orderSql);
-      var orders = await connection.Query<Order>([orderDataRequest]);
+      var orders = await connection.Query<Order>([orderDataRequest, new(LibSqlOp.Close)]);
       if (orders == null)
       {
         throw new InvalidOperationException("No Orders Backorders Found");
@@ -55,7 +55,7 @@ namespace FleurCo_API.Classes
             new(id)
         };
       var orderDataRequest = new LibSqlRequest(LibSqlOp.Execute, orderSql, orderArgs);
-      var order = await connection.Query<Order>([orderDataRequest]);
+      var order = await connection.Query<Order>([orderDataRequest, new(LibSqlOp.Close)]);
       if (order == null)
       {
         throw new InvalidOperationException("No Orders To Display");
@@ -70,7 +70,7 @@ namespace FleurCo_API.Classes
             new(id)
         };
       var selectedOrderDataRequest = new LibSqlRequest(LibSqlOp.Execute, selectedOrderSql, selectedOrderArgs);
-      var selectedOrder = await connection.Query<OrderProduct>([selectedOrderDataRequest]);
+      var selectedOrder = await connection.Query<OrderProduct>([selectedOrderDataRequest, new(LibSqlOp.Close)]);
       if (selectedOrder == null)
       {
         throw new InvalidOperationException("No Order Products to Display");
