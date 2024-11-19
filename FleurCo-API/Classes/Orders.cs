@@ -64,7 +64,7 @@ namespace FleurCo_API.Classes
     }
     public static async Task<Rows<OrderProduct>> GetOrderProducts(LibSqlConnection connection, string id)
     {
-      var selectedOrderSql = "SELECT OrderProducts.product_qty, OrderProducts.inventory_id, Products.* FROM OrderProducts JOIN Products ON OrderProducts.product_id = Products.product_id WHERE OrderProducts.order_id = ?";
+      var selectedOrderSql = "SELECT OrderProducts.product_qty, OrderProducts.inventory_id, Products.*, Inventory.* FROM OrderProducts JOIN Products ON Inventory.product_id = Products.product_id JOIN Inventory ON OrderProducts.inventory_id = Inventory.inventory_id WHERE OrderProducts.order_id = ?";
       var selectedOrderArgs = new List<LibSqlArg>
         {
             new(id)
@@ -96,8 +96,8 @@ namespace FleurCo_API.Classes
   }
   public class OrderProduct : Product
   {
-    public string InventoryId { get; set; }
-    public double ProductQuantity { get; set; }
+    [ColumnName("inventory_id")] public string inventoryId { get; set; }
+    [ColumnName("product_qty")] public double ProductQty { get; set; }
   }
 
 

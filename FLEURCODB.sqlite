@@ -81,7 +81,7 @@ CREATE TABLE OrderProducts (
     inventory_id TEXT,
     product_qty INTEGER,
     FOREIGN KEY (order_id) REFERENCES Orders(order_id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES Products(product_id) ON DELETE SET NULL
+    FOREIGN KEY (inventory_id) REFERENCES Inventory(inventory_id) ON DELETE SET NULL
 );
 
 CREATE TABLE Invoices (

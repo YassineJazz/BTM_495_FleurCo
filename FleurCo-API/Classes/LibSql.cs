@@ -154,6 +154,10 @@ public class LibSqlConnection
         var resultData = response.results[0].response.result;
         if (resultData == null || resultData.rows == null)
         {
+            if (response.results[0].error != null)
+            {
+                Console.Error.WriteLine(response.results[0].error?.message);
+            }
             throw new Exception("No rows in response");
         }
         return new Rows<T>(resultData.rows, resultData.cols);
