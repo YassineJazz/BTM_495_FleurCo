@@ -15,11 +15,41 @@ export interface Order {
     orderTotal: number;
 }
 export interface OrderProduct extends Product {
-    productQuantity: number
+    productQty: number;
+    inventoryId: string;
+
 }
 export interface InventoryProduct extends Product {
     inventoryId: string;
     quantity: number;
+}
+
+export interface BackOrderRequest {
+    inventoryId: string;
+    quantity: number;
+}
+
+export const getOrderProducts = async (orderId: string): Promise<OrderProduct[]> => {
+    const res = await fetch(`${API_URL}/orders/${orderId}/products`);
+    if (!res.ok) {
+        throw new Error('Failed to fetch order products');
+    }
+    return res.json();
+};
+export const createBackorder = async (items: BackOrderRequest[]): Promise<Order> => {
+    const response = await fetch(`${API_URL}/backorders`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(items),
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to create product');
+    }
+
+    return response.json();
 }
 
 export const getInventory = async (): Promise<InventoryProduct[]> => {

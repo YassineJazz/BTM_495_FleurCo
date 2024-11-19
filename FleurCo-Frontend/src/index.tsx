@@ -9,7 +9,9 @@ import Home from './pages/Home';
 import NewProductPage from './pages/NewProduct';
 import Orders from './pages/Orders';
 import Inventory from './pages/Inventory';
-import Item from './pages/item';
+import Item from './pages/Item';
+import NewBackOrder from './pages/NewBackOrder';
+import OrderPage from './pages/Order';
 
 const root = document.getElementById('root');
 
@@ -28,6 +30,8 @@ render(() => (
         <Route path="/products/:productId" component={Product} />
         <Route path="/products/new" component={NewProductPage} />
         <Route path="/orders" component={Orders} />
+        <Route path="/orders/:orderId" component={OrderPage} />
+        <Route path="/backorders/new" component={NewBackOrder} />
         <Route path="*" component={NotFound} />
     </Router>
 ), root!);

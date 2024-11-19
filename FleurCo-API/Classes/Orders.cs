@@ -135,12 +135,7 @@ namespace FleurCo_API.Classes
       var newOrderGuid = Guid.NewGuid().ToString();
 
       double backOrderTotal = 0;
-      // foreach (var item in newBackOrder)
-      // {
-      //   backOrderTotal += item.ProductCost * request.Quantity;
-      // }
-      Console.WriteLine(string.Join(", ", newBackOrder.Select(o => o.InventoryId)));
-      Console.WriteLine(string.Join(", ", request.Select(o => o.InventoryId)));
+
       var itemMap = new Dictionary<string, Association>();
       foreach (var item in newBackOrder)
       {
@@ -156,7 +151,6 @@ namespace FleurCo_API.Classes
       {
         backOrderTotal += value.Cost * value.Quantity;
       }
-      Console.WriteLine($"Total: {backOrderTotal}");
 
       var addOrderSql = @"INSERT INTO Orders (order_id, order_type, order_status, order_total) VALUES (?,'backorder','in progress',?) ";
 

@@ -45,7 +45,7 @@ const ProductPage = () => {
     return (
         <Layout>
             <div class="flex w-full justify-between items-center">
-                <div class="flex gap-4">
+                <div class="flex gap-4 items-center">
                     <button class="btn btn-sm btn-neutral" onClick={goBack}>Back</button>
                     <p class="text-3xl font-semibold">Updating: {product()?.productName}</p>
                 </div>
