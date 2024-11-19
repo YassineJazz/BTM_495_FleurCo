@@ -42,6 +42,7 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
+app.UseCors();
 
 
 if (app.Environment.IsDevelopment())
@@ -178,22 +179,16 @@ public class ProductPutRequest
 
 public class InventoryPatchRequest
 {
+    [JsonPropertyName("quantity")]
     public required double Quantity { get; set; }
 }
 public class BackOrderPostRequest
 {
-    [JsonPropertyName("productId")]
-    public required string ProductId { get; set; }
-    [JsonPropertyName("productName")]
-    public required string ProductName { get; set; }
-    [JsonPropertyName("productPrice")]
-    public required double ProductPrice { get; set; }
-    [JsonPropertyName("productCost")]
-    public required double ProductCost { get; set; }
-    [JsonPropertyName("productCategory")]
-    public required string ProductCategory { get; set; }
-    [JsonPropertyName("quantity")]
-    public required double Quantity { get; set; }
     [JsonPropertyName("inventoryId")]
-    public required string InventoryId { get; set; }
+    public required string InventoryId
+    { get; set; }
+    [JsonPropertyName("quantity")]
+    public required double Quantity
+    { get; set; }
+
 }

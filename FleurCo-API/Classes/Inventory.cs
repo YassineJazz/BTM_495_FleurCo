@@ -34,6 +34,21 @@ namespace FleurCo_API.Classes
             }
             return item;
         }
+        public static async Task<Rows<InventoryProduct>> GetItems(LibSqlConnection connection, List<string> ids)
+        {
+            var placeholders = string.Join(",", ids.Select(x => "?"));
+            var itemSql = $"SELECT inventory.inventory_id, products.*, inventory.quantity FROM inventory INNER JOIN products ON inventory.product_id = products.product_id WHERE inventory.inventory_id IN ({placeholders})";
+
+            var itemArgs = ids.Select(id => new LibSqlArg(id)).ToList();
+
+            var itemDataRequest = new LibSqlRequest(LibSqlOp.Execute, itemSql, itemArgs);
+            var items = await connection.Query<InventoryProduct>([itemDataRequest]);
+            if (items == null)
+            {
+                throw new InvalidOperationException("No Items To Display");
+            }
+            return items;
+        }
 
         public static async Task AddProduct(LibSqlConnection connection, Product newProduct)
         {

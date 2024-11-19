@@ -76,9 +76,11 @@ namespace FleurCo_API.Classes
         {
             await Inventory.ConfirmUpdateQty(Connection, id, quantity);
         }
-        public async Task<string> CreateBackorder(List<BackOrderPostRequest> newBackOrder)
+        public async Task<string> CreateBackorder(List<BackOrderPostRequest> request)
         {
-            var newOrderGuid = await BackOrder.ConfirmBackOrder(Connection, newBackOrder);
+            var itemIds = request.Select(x => x.InventoryId).ToList();
+            var orderProducts = await Inventory.GetItems(Connection, itemIds);
+            var newOrderGuid = await BackOrder.ConfirmBackOrder(Connection, orderProducts, request);
             return newOrderGuid;
 
         }

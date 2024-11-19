@@ -52,7 +52,7 @@ namespace FleurCo_API.Classes
 
       var orderArgs = new List<LibSqlArg>
         {
-            new LibSqlArg(id)
+            new(id)
         };
       var orderDataRequest = new LibSqlRequest(LibSqlOp.Execute, orderSql, orderArgs);
       var order = await connection.Query<Order>([orderDataRequest]);
@@ -64,10 +64,10 @@ namespace FleurCo_API.Classes
     }
     public static async Task<Rows<OrderProduct>> GetOrderProducts(LibSqlConnection connection, string id)
     {
-      var selectedOrderSql = "SELECT OrderProducts.product_qty, Products.* FROM OrderProducts JOIN Products ON OrderProducts.product_id = Products.product_id WHERE OrderProducts.order_id = ?";
+      var selectedOrderSql = "SELECT OrderProducts.product_qty, OrderProducts.inventory_id, Products.* FROM OrderProducts JOIN Products ON OrderProducts.product_id = Products.product_id WHERE OrderProducts.order_id = ?";
       var selectedOrderArgs = new List<LibSqlArg>
         {
-            new LibSqlArg(id)
+            new(id)
         };
       var selectedOrderDataRequest = new LibSqlRequest(LibSqlOp.Execute, selectedOrderSql, selectedOrderArgs);
       var selectedOrder = await connection.Query<OrderProduct>([selectedOrderDataRequest]);
@@ -96,6 +96,7 @@ namespace FleurCo_API.Classes
   }
   public class OrderProduct : Product
   {
+    public string InventoryId { get; set; }
     public double ProductQuantity { get; set; }
   }
 
@@ -106,6 +107,13 @@ namespace FleurCo_API.Classes
     public string WorkerID { get; set; }
   }
 
+
+  class Association
+  {
+    public double Quantity { get; set; }
+    public double Cost { get; set; }
+
+  }
   public class BackOrder : Order
   {
     public string WHManagerID { get; set; }
@@ -122,34 +130,53 @@ namespace FleurCo_API.Classes
     // {
 
     // }
-    public static async Task<string> ConfirmBackOrder(LibSqlConnection connection, List<BackOrderPostRequest> newBackOrder)
+    public static async Task<string> ConfirmBackOrder(LibSqlConnection connection, Rows<InventoryProduct> newBackOrder, List<BackOrderPostRequest> request)
     {
       var newOrderGuid = Guid.NewGuid().ToString();
 
       double backOrderTotal = 0;
+      // foreach (var item in newBackOrder)
+      // {
+      //   backOrderTotal += item.ProductCost * request.Quantity;
+      // }
+      Console.WriteLine(string.Join(", ", newBackOrder.Select(o => o.InventoryId)));
+      Console.WriteLine(string.Join(", ", request.Select(o => o.InventoryId)));
+      var itemMap = new Dictionary<string, Association>();
       foreach (var item in newBackOrder)
       {
-        backOrderTotal += item.ProductCost * item.Quantity;
+        itemMap[item.InventoryId] = new Association { Cost = item.ProductCost, Quantity = 0 };
       }
+
+      foreach (var item in request)
+      {
+        itemMap[item.InventoryId].Quantity = item.Quantity;
+      }
+
+      foreach (var (key, value) in itemMap)
+      {
+        backOrderTotal += value.Cost * value.Quantity;
+      }
+      Console.WriteLine($"Total: {backOrderTotal}");
+
       var addOrderSql = @"INSERT INTO Orders (order_id, order_type, order_status, order_total) VALUES (?,'backorder','in progress',?) ";
 
       var addOrderArgs = new List<LibSqlArg>
         {
-            new LibSqlArg(newOrderGuid),
-            new LibSqlArg(backOrderTotal)
+            new(newOrderGuid),
+            new(backOrderTotal)
 
         };
       var addOrderDataRequest = new LibSqlRequest(LibSqlOp.Execute, addOrderSql, addOrderArgs);
       await connection.Execute([addOrderDataRequest]);
 
-      foreach (var item in newBackOrder)
+      foreach (var item in request)
       {
-        var addOrderProductSql = @"INSERT INTO OrderProducts (order_id, product_id, product_qty) VALUES (?,?,?) ";
+        var addOrderProductSql = @"INSERT INTO OrderProducts (order_id, inventory_id, product_qty) VALUES (?,?,?) ";
         var addOrderProductArgs = new List<LibSqlArg>
         {
-            new LibSqlArg(newOrderGuid),
-            new LibSqlArg(item.ProductId),
-            new LibSqlArg(item.Quantity)
+            new(newOrderGuid),
+            new(item.InventoryId),
+            new(item.Quantity)
 
         };
         var addOrderProductDataRequest = new LibSqlRequest(LibSqlOp.Execute, addOrderProductSql, addOrderProductArgs);
@@ -160,8 +187,8 @@ namespace FleurCo_API.Classes
 
       var addBackOrderArgs = new List<LibSqlArg>
         {
-            new LibSqlArg(newOrderGuid),
-            new LibSqlArg(backOrderTotal)
+            new(newOrderGuid),
+            new(backOrderTotal)
 
         };
       var addBackOrderDataRequest = new LibSqlRequest(LibSqlOp.Execute, addBackOrderSql, addBackOrderArgs);
