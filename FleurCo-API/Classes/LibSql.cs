@@ -177,6 +177,10 @@ public class LibSqlConnection
         var resultData = response.results[0].response.result;
         if (resultData == null)
         {
+            if (response.results[0].error != null)
+            {
+                Console.Error.WriteLine(response.results[0].error?.message);
+            }
             throw new Exception("No result in response");
         }
         return resultData.affected_row_count;
@@ -257,6 +261,12 @@ public class LibSqlResult
 {
     public string type { get; set; } = string.Empty;
     public LibSqlResultResponse response { get; set; } = new LibSqlResultResponse();
+    public LibSqlResultError? error { get; set; }
+}
+
+public class LibSqlResultError
+{
+    public string message { get; set; } = string.Empty;
 }
 
 public class LibSqlResultResponse

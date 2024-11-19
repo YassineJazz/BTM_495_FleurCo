@@ -96,17 +96,6 @@ namespace FleurCo_API.Classes
   }
   public class OrderProduct : Product
   {
-    [ColumnName("product_id")]
-    public string ProductId { get; set; }
-    [ColumnName("product_name")]
-    public string ProductName { get; set; }
-    [ColumnName("product_price")]
-    public double ProductPrice { get; set; }
-    [ColumnName("product_cost")]
-    public double ProductCost { get; set; }
-    [ColumnName("product_category")]
-    public string ProductCategory { get; set; }
-    [ColumnName("product_qty")]
     public double ProductQuantity { get; set; }
   }
 
