@@ -59,7 +59,7 @@ app.MapGet("/", () =>
 //inventory
 app.MapGet("/inventory", async (FleurCoSystem system) =>
 {
-    return await system.DisplayInventory();
+    return await system.RequestInventory();
 });
 app.MapGet("/inventory/{id}", async (string id, FleurCoSystem system) =>
 {
@@ -82,7 +82,7 @@ app.MapPatch("/inventory/{id}", async (string id, InventoryPatchRequest request,
 //products
 app.MapGet("/products", async (FleurCoSystem system) =>
 {
-    return await system.DisplayProductLine();
+    return await system.RequestProductLine();
 });
 app.MapGet("/products/{id}", async (string id, FleurCoSystem system) =>
 {
@@ -115,11 +115,11 @@ app.MapPut("/products/{id}", async (string id, ProductPutRequest request, FleurC
 //orders
 app.MapGet("/orders", async (FleurCoSystem system) =>
 {
-    return await system.DisplayOrderList();
+    return await system.RequestOrderList();
 });
 app.MapGet("/backorders", async (FleurCoSystem system) =>
 {
-    return await system.DisplayBackOrders();
+    return await system.RequestBackOrders();
 });
 app.MapPost("/backorders", async (List<BackOrderPostRequest> request, FleurCoSystem system) =>
 {
@@ -129,7 +129,7 @@ app.MapPost("/backorders", async (List<BackOrderPostRequest> request, FleurCoSys
 });
 app.MapGet("/customerorders", async (FleurCoSystem system) =>
 {
-    return await system.DisplayCustomerOrders();
+    return await system.RequestCustomerOrders();
 });
 app.MapGet("/orders/{id}", async (string id, FleurCoSystem system) =>
 {

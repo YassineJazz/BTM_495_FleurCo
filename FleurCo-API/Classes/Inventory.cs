@@ -1,6 +1,5 @@
 using LibSql;
 using System.Text.Json.Serialization;
-using System.ComponentModel.DataAnnotations;
 
 namespace FleurCo_API.Classes
 {
@@ -62,7 +61,7 @@ namespace FleurCo_API.Classes
             var addDataRequest = new LibSqlRequest(LibSqlOp.Execute, addSql, addArgs);
             await connection.Execute([addDataRequest, new(LibSqlOp.Close)]);
         }
-        public static async Task ConfirmUpdateQty(LibSqlConnection connection, string id, double quantity)
+        public static async Task UpdateQty(LibSqlConnection connection, string id, double quantity)
         {
             var updateQtySql = @"UPDATE Inventory SET quantity = ? WHERE inventory_id = ?";
             var updateQtyArgs = new List<LibSqlArg>

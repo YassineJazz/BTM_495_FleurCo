@@ -12,7 +12,7 @@ namespace FleurCo_API.Classes
         {
             Connection = connection;
         }
-        public async Task<Rows<InventoryProduct>> DisplayInventory()
+        public async Task<Rows<InventoryProduct>> RequestInventory()
         {
             return await Inventory.DisplayInventory(Connection);
         }
@@ -20,7 +20,7 @@ namespace FleurCo_API.Classes
         {
             return await Inventory.GetItem(Connection, id);
         }
-        public async Task<Rows<Product>> DisplayProductLine()
+        public async Task<Rows<Product>> RequestProductLine()
         {
             return await Product.DisplayProductLine(Connection);
         }
@@ -28,16 +28,16 @@ namespace FleurCo_API.Classes
         {
             return await Product.GetProduct(Connection, id);
         }
-        public async Task<Rows<Order>> DisplayOrderList()
+        public async Task<Rows<Order>> RequestOrderList()
         {
             return await Order.DisplayOrderList(Connection);
         }
 
-        public async Task<Rows<Order>> DisplayCustomerOrders()
+        public async Task<Rows<Order>> RequestCustomerOrders()
         {
             return await Order.DisplayCustomerOrders(Connection);
         }
-        public async Task<Rows<Order>> DisplayBackOrders()
+        public async Task<Rows<Order>> RequestBackOrders()
         {
             return await Order.DisplayBackOrders(Connection);
         }
@@ -74,13 +74,13 @@ namespace FleurCo_API.Classes
 
         public async Task UpdateQty(string id, double quantity)
         {
-            await Inventory.ConfirmUpdateQty(Connection, id, quantity);
+            await Inventory.UpdateQty(Connection, id, quantity);
         }
         public async Task<string> CreateBackorder(List<BackOrderPostRequest> request)
         {
             var itemIds = request.Select(x => x.InventoryId).ToList();
             var orderProducts = await Inventory.GetItems(Connection, itemIds);
-            var newOrderGuid = await BackOrder.ConfirmBackOrder(Connection, orderProducts, request);
+            var newOrderGuid = await BackOrder.ConfirmBackorder(Connection, orderProducts, request);
             return newOrderGuid;
 
         }

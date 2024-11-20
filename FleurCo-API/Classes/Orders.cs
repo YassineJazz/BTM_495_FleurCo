@@ -130,7 +130,7 @@ namespace FleurCo_API.Classes
     // {
 
     // }
-    public static async Task<string> ConfirmBackOrder(LibSqlConnection connection, Rows<InventoryProduct> newBackOrder, List<BackOrderPostRequest> request)
+    public static async Task<string> ConfirmBackorder(LibSqlConnection connection, Rows<InventoryProduct> newBackOrder, List<BackOrderPostRequest> request)
     {
       var newOrderGuid = Guid.NewGuid().ToString();
 
