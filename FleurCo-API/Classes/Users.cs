@@ -52,24 +52,4 @@ namespace FleurCo_API.Classes
         }
 
     }
-    // public class Address
-    // {
-    //     public string Street { get; set; }
-    //     public string Municipality { get; set; }
-    //     public string Province { get; set; }
-    //     public string Country { get; set; }
-    //     public string PostalCode { get; set; }
-    //     public string Type { get; set; }
-
-    //     public Address(string street, string municipality, string province, string country, string postalCode, string type)
-    //     {
-    //         Street = street;
-    //         Municipality = municipality;
-    //         Province = province;
-    //         Country = country;
-    //         PostalCode = postalCode;
-    //         Type = type;
-    //     }
-
-    // }
 }

@@ -101,11 +101,11 @@ namespace FleurCo_API.Classes
   }
 
 
-  public class CustomerOrder : Order
-  {
-    public string CustomerID { get; set; }
-    public string WorkerID { get; set; }
-  }
+  // public class CustomerOrder : Order
+  // {
+  //   public string CustomerID { get; set; }
+  //   public string WorkerID { get; set; }
+  // }
 
 
   class Association
