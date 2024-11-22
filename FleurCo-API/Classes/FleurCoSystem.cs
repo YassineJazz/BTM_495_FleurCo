@@ -6,7 +6,6 @@ namespace FleurCo_API.Classes
         public Inventory Inventory { get; set; }
         public string ConfirmationMessages { get; set; }
         public SalesForecast SalesForecast { get; set; }
-        public Order CurrentOrder { get; set; }
         private LibSqlConnection Connection { get; set; }
         public FleurCoSystem(LibSqlConnection connection)
         {
