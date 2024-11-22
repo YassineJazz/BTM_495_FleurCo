@@ -32,10 +32,17 @@ export const Products = () => {
     return (
         <Layout>
             <div class="flex flex-col h-full w-full gap-4">
-                <div class="px-2 flex flex-col gap-4">
+                <div class="px-2 flex flex-col gap-2">
+                    <h1 class="text-3xl font-bold"> FleurCo </h1>
                     <div class="flex flex-row justify-between items-center">
-                        <h1 class="text-3xl font-bold"> Products </h1>
-                        <a href="/products/new" class="btn btn-primary">New</a>
+                        <h2 class="text-3xl font-semi-bold"> Product Line </h2>
+                        <div class="flex flex-row justify-center items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24"><path d="M19 7.001c0 3.865-3.134 7-7 7s-7-3.135-7-7c0-3.867 3.134-7.001 7-7.001s7 3.134 7 7.001zm-1.598 7.18c-1.506 1.137-3.374 1.82-5.402 1.82-2.03 0-3.899-.685-5.407-1.822-4.072 1.793-6.593 7.376-6.593 9.821h24c0-2.423-2.6-8.006-6.598-9.819z" /></svg>                            <div class="flex flex-col justify-start items-start">
+                                <label class="text-3x1 font-bold text-base"> Bryan Doe</label>
+                                <label class="text-3x1 font-semi-bold text-sm">Warehouse Manager</label>
+                            </div>
+                        </div>
+
                     </div>
                     <label class="input input-bordered flex items-center gap-2">
                         <input type="text" class="grow" placeholder="Search by ID, Name, Price, Cost, Category..." value={search()} onInput={(e) => setSearch(e.currentTarget.value)} />
@@ -51,15 +58,21 @@ export const Products = () => {
                         </svg>
                     </label>
                 </div>
+                <div class="flex flex-row">
+                    <a href="/products/new" class="btn btn-primary">Add New Product</a>
+
+
+                </div>
 
                 <div class="overflow-x-auto p-2 h-full">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Price</th>
-                                <th>Cost</th>
                                 <th>Category</th>
+                                <th>Price ($)</th>
+                                <th>Cost ($)</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -72,9 +85,10 @@ export const Products = () => {
                                         onClick={() => navigate(`/products/${product.productId}`)}
                                     >
                                         <td>{product.productName}</td>
+                                        <td>{product.productCategory}</td>
                                         <td>{product.productPrice}</td>
                                         <td>{product.productCost}</td>
-                                        <td>{product.productCategory}</td>
+
                                     </tr>
                                 )}
                             </For>
@@ -82,7 +96,7 @@ export const Products = () => {
                     </table>
                 </div>
             </div>
-        </Layout>
+        </Layout >
     )
 }
 export default Products

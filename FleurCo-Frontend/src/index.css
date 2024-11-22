@@ -2,7 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-body, html, #root {
+body,
+html,
+#root {
+  font-family: 'Montserrat';
+  font-size: 18px;
   margin: 0;
   padding: 0;
   height: 100%;
