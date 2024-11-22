@@ -84,6 +84,7 @@ namespace FleurCo_API.Classes
 
         }
 
+        //methods either unused for now, or done in the frontend
 
         // public void SearchProduct()
         // {
