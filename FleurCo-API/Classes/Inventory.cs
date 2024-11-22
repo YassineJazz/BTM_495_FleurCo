@@ -6,7 +6,7 @@ namespace FleurCo_API.Classes
 
     public class Inventory
     {
-        public static async Task<Rows<InventoryProduct>> DisplayInventory(LibSqlConnection connection)
+        public static async Task<Rows<InventoryProduct>> RequestInventory(LibSqlConnection connection)
         {
             var inventorySql = "SELECT inventory.inventory_id, products.*, inventory.quantity FROM inventory INNER JOIN products ON inventory.product_id = products.product_id";
             var inventoryDataRequest = new LibSqlRequest(LibSqlOp.Execute, inventorySql);

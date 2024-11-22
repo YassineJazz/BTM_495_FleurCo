@@ -13,7 +13,7 @@ namespace FleurCo_API.Classes
         }
         public async Task<Rows<InventoryProduct>> RequestInventory()
         {
-            return await Inventory.DisplayInventory(Connection);
+            return await Inventory.RequestInventory(Connection);
         }
         public async Task<Rows<InventoryProduct>> GetItem(string id)
         {
@@ -21,7 +21,7 @@ namespace FleurCo_API.Classes
         }
         public async Task<Rows<Product>> RequestProductLine()
         {
-            return await Product.DisplayProductLine(Connection);
+            return await Product.RequestProductLine(Connection);
         }
         public async Task<Rows<Product>> GetProduct(string id)
         {
@@ -29,16 +29,16 @@ namespace FleurCo_API.Classes
         }
         public async Task<Rows<Order>> RequestOrderList()
         {
-            return await Order.DisplayOrderList(Connection);
+            return await Order.RequestOrderList(Connection);
         }
 
         public async Task<Rows<Order>> RequestCustomerOrders()
         {
-            return await Order.DisplayCustomerOrders(Connection);
+            return await Order.RequestCustomerOrders(Connection);
         }
         public async Task<Rows<Order>> RequestBackOrders()
         {
-            return await Order.DisplayBackOrders(Connection);
+            return await Order.RequestBackOrders(Connection);
         }
         public async Task<Rows<Order>> GetOrder(string id)
         {
