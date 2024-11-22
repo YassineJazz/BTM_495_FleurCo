@@ -13,7 +13,7 @@ namespace FleurCo_API.Classes
     [ColumnName("order_total")] public double OrderTotal { get; set; }
 
 
-    public static async Task<Rows<Order>> DisplayOrderList(LibSqlConnection connection)
+    public static async Task<Rows<Order>> RequestOrderList(LibSqlConnection connection)
     {
       var orderSql = "SELECT * FROM Orders";
       var orderDataRequest = new LibSqlRequest(LibSqlOp.Execute, orderSql);
@@ -24,7 +24,7 @@ namespace FleurCo_API.Classes
       }
       return orders;
     }
-    public static async Task<Rows<Order>> DisplayCustomerOrders(LibSqlConnection connection)
+    public static async Task<Rows<Order>> RequestCustomerOrders(LibSqlConnection connection)
     {
       var orderSql = "SELECT * FROM Orders WHERE order_type = 'customer'";
       var orderDataRequest = new LibSqlRequest(LibSqlOp.Execute, orderSql);
@@ -35,7 +35,7 @@ namespace FleurCo_API.Classes
       }
       return orders;
     }
-    public static async Task<Rows<Order>> DisplayBackOrders(LibSqlConnection connection)
+    public static async Task<Rows<Order>> RequestBackOrders(LibSqlConnection connection)
     {
       var orderSql = "SELECT * FROM Orders WHERE order_type = 'backorder'";
       var orderDataRequest = new LibSqlRequest(LibSqlOp.Execute, orderSql);

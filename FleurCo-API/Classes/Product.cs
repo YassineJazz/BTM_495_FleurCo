@@ -17,7 +17,7 @@ namespace FleurCo_API.Classes
         //     ProductCost = productCost;
         //     ProductCategory = productCategory;
         // }
-        public static async Task<Rows<Product>> DisplayProductLine(LibSqlConnection connection)
+        public static async Task<Rows<Product>> RequestProductLine(LibSqlConnection connection)
         {
             var productLineSql = "SELECT * FROM Products";
             var productLineDataRequest = new LibSqlRequest(LibSqlOp.Execute, productLineSql);
