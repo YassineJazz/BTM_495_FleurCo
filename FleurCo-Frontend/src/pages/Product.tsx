@@ -50,7 +50,7 @@ const ProductPage = () => {
         || (name() === "" || price() === "" || cost() === "" || category() === ""));
     return (
         <Layout>
-            <div class="flex flex-col gap-2">
+            <div class="flex flex-col gap-2 p-4">
                 <h1 class="text-3xl font-bold"> FleurCo </h1>
                 <div class="flex flex-row justify-between items-center">
                     <h2 class="text-3xl font-semi-bold"> Product Line </h2>
@@ -84,26 +84,26 @@ const ProductPage = () => {
                     />
 
                 </div>
+                <form class="flex flex-col gap-4 w-full min-h-fit" onSubmit={onSubmit}>
+                    <div class="flex flex-col gap">
+                        <label for="name" class="label text-sm">Name</label>
+                        <input type="text" id="name" class="input input-bordered" value={name()} onInput={(e) => setName(e.currentTarget.value)} />
+                    </div>
+                    <div class="flex flex-col gap">
+                        <label for="price" class="label text-sm">Price</label>
+                        <input type="number" id="price" class="input input-bordered" value={price()} onInput={(e) => setPrice(e.currentTarget.value)} />
+                    </div>
+                    <div class="flex flex-col gap">
+                        <label for="cost" class="label text-sm">Cost</label>
+                        <input type="number" id="cost" class="input input-bordered" value={cost()} onInput={(e) => setCost(e.currentTarget.value)} />
+                    </div>
+                    <div class="flex flex-col gap">
+                        <label for="category" class="label text-sm">Category</label>
+                        <input type="text" id="category" class="input input-bordered" value={category()} onInput={(e) => setCategory(e.currentTarget.value)} />
+                    </div>
+                    <button class="btn btn-primary" type="submit" disabled={disabled()}>Save</button>
+                </form>
             </div>
-            <form class="flex flex-col gap-4 w-full min-h-fit" onSubmit={onSubmit}>
-                <div class="flex flex-col gap">
-                    <label for="name" class="label text-sm">Name</label>
-                    <input type="text" id="name" class="input input-bordered" value={name()} onInput={(e) => setName(e.currentTarget.value)} />
-                </div>
-                <div class="flex flex-col gap">
-                    <label for="price" class="label text-sm">Price</label>
-                    <input type="number" id="price" class="input input-bordered" value={price()} onInput={(e) => setPrice(e.currentTarget.value)} />
-                </div>
-                <div class="flex flex-col gap">
-                    <label for="cost" class="label text-sm">Cost</label>
-                    <input type="number" id="cost" class="input input-bordered" value={cost()} onInput={(e) => setCost(e.currentTarget.value)} />
-                </div>
-                <div class="flex flex-col gap">
-                    <label for="category" class="label text-sm">Category</label>
-                    <input type="text" id="category" class="input input-bordered" value={category()} onInput={(e) => setCategory(e.currentTarget.value)} />
-                </div>
-                <button class="btn btn-primary" type="submit" disabled={disabled()}>Save</button>
-            </form>
         </Layout >
     )
 }

@@ -33,7 +33,7 @@ const NewProductPage = () => {
     const disabled = createMemo(() => name() === "" || price() === "" || cost() === "" || category() === "");
     return (
         <Layout>
-            <div class="px-2 flex flex-col h-full w-full gap-4">
+            <div class="px-2 flex flex-col h-full w-full gap-4 p-4">
                 <div class="flex flex-col gap-2">
                     <h1 class="text-3xl font-bold"> FleurCo </h1>
                     <div class="flex flex-row justify-between items-center">

@@ -96,7 +96,7 @@ export const NewBackOrder = () => {
 
     return (
         <Layout>
-            <div class="px-2 flex flex-col h-full w-full gap-4">
+            <div class="flex flex-col h-full w-full gap-4 p-4">
                 <div class="flex flex-col gap-2">
                     <h1 class="text-3xl font-bold"> FleurCo </h1>
                     <div class="flex flex-row justify-between items-center">
@@ -110,8 +110,8 @@ export const NewBackOrder = () => {
 
                     </div>
                 </div>
-                <div class="flex flex-col h-full w-full gap-4">
-                    <div class="px-2 flex flex-col gap-4">
+                <div class="flex flex-col w-full gap-4 overflow-y-auto">
+                    <div class="flex flex-col gap-4">
                         <div class="flex flex-row justify-between items-center gap-8">
                             <div class="flex flex-col gap-4 items-start">
                                 <Modal
@@ -139,7 +139,7 @@ export const NewBackOrder = () => {
                         </label>
                     </div>
 
-                    <form class="overflow-x-auto p-2 h-full" onSubmit={onSubmit}>
+                    <form class="overflow-x-auto p-2" onSubmit={onSubmit}>
                         <table class="table">
                             <thead>
                                 <tr>

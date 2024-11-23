@@ -17,8 +17,8 @@ const OrderPage = () => {
 
     return (
         <Layout>
-            <div class="flex w-full justify-between items-center gap-4">
-                <div class="flex flex-col h-full w-full gap-4">
+            <div class="flex flex-col w-full h-screen gap-4 p-4">
+                <div class="flex flex-col w-full gap-4">
                     <div class="flex flex-col gap-2">
                         <h1 class="text-3xl font-bold"> FleurCo </h1>
                         <div class="flex flex-row justify-between items-center">
@@ -37,49 +37,49 @@ const OrderPage = () => {
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="flex flex-col gap w-full h-full gap-2">
-                <div class="flex flex-col items-start">
-                    <label for="date" class="label gap-2"> <span class="font-bold"> Date: </span>{order()?.orderDate ? convertToEasternTime(order()?.orderDate!) : ""}</label>
-                </div>
-                <div class="flex flex-col items-start">
-                    <label for="date" class="label gap-2"> <span class="font-bold"> Type: </span>{order()?.orderType}</label>
-                </div><div class="flex flex-col items-start">
-                    <label for="date" class="label gap-2"> <span class="font-bold"> Status: </span>{order()?.orderStatus}</label>
-                </div><div class="flex flex-col items-start">
-                    <label for="date" class="label gap-2"> <span class="font-bold"> Order Total: </span>{order()?.orderTotal}</label>
-                </div>
+                <div class="flex flex-col gap w-full h-full min-h-0 flex-1 gap-2">
+                    <div class="flex flex-col items-start">
+                        <label for="date" class="label gap-2"> <span class="font-bold"> Date: </span>{order()?.orderDate ? convertToEasternTime(order()?.orderDate!) : ""}</label>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <label for="date" class="label gap-2"> <span class="font-bold"> Type: </span>{order()?.orderType}</label>
+                    </div><div class="flex flex-col items-start">
+                        <label for="date" class="label gap-2"> <span class="font-bold"> Status: </span>{order()?.orderStatus}</label>
+                    </div><div class="flex flex-col items-start">
+                        <label for="date" class="label gap-2"> <span class="font-bold"> Order Total: </span>{order()?.orderTotal}</label>
+                    </div>
 
-                <h1 class="text-lg font-semibold"> Products in this order: </h1>
+                    <h1 class="text-lg font-semibold"> Products in this order: </h1>
 
-                <div class="overflow-x-auto p-2 h-full">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
-                                <th>Cost</th>
-                                <th>Category</th>
+                    <div class="flex min-h-0 overflow-x-auto">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Cost</th>
+                                    <th>Category</th>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <For each={products()}>
-                                {(product) => (
-                                    <tr
-                                    >
-                                        <td>{product.productName}</td>
-                                        <td>{product.productQty}</td>
-                                        <td>{product.productPrice}</td>
-                                        <td>{product.productCost}</td>
-                                        <td>{product.productCategory}</td>
+                                </tr>
+                            </thead>
+                            <tbody >
+                                <For each={products()}>
+                                    {(product) => (
+                                        <tr
+                                        >
+                                            <td>{product.productName}</td>
+                                            <td>{product.productQty}</td>
+                                            <td>{product.productPrice}</td>
+                                            <td>{product.productCost}</td>
+                                            <td>{product.productCategory}</td>
 
-                                    </tr>
-                                )}
-                            </For>
-                        </tbody>
-                    </table>
+                                        </tr>
+                                    )}
+                                </For>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </Layout>

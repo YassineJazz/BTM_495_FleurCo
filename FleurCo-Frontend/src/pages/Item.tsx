@@ -42,9 +42,9 @@ const Item = () => {
         || (quantity().toString() === ""));
     return (
         <Layout>
-            <div class="flex w-full justify-between items-center">
+            <div class="flex flex-col w-full justify-between items-center p-4">
                 <div class="flex flex-col h-full w-full gap-4">
-                    <div class="px-2 flex flex-col gap-2">
+                    <div class="flex flex-col gap-2">
                         <h1 class="text-3xl font-bold"> FleurCo </h1>
                         <div class="flex flex-row justify-between items-center">
                             <h2 class="text-3xl font-semi-bold"> Product Line </h2>
@@ -66,24 +66,24 @@ const Item = () => {
                         <p class="text-3xl font-semibold">Item info: {item()?.productName}</p>
                     </div>
                 </div>
+                <form class="flex flex-col gap-4 w-full h-full" onSubmit={onSubmit}>
+                    <div class="flex flex-col gap">
+                        <label for="name" class="label text-sm">Name {item()?.productName}</label>
+                    </div> <div class="flex flex-col gap">
+                        <label for="price" class="label text-sm">Price {item()?.productPrice}</label>
+                    </div> <div class="flex flex-col gap">
+                        <label for="cost" class="label text-sm">Cost {item()?.productCost}</label>
+                    </div>
+                    <div class="flex flex-col gap">
+                        <label for="category" class="label text-sm">Category {item()?.productCategory}</label>
+                    </div>
+                    <div class="flex flex-col gap">
+                        <label for="quantity" class="label text-sm">Quantity</label>
+                        <input type="number" id="quantity" class="input input-bordered" value={quantity()} onInput={(e) => setQuantity(e.currentTarget.value)} />
+                    </div>
+                    <button class="btn btn-primary" type="submit" disabled={disabled()}>Save</button>
+                </form>
             </div>
-            <form class="flex flex-col gap-4 w-full h-full" onSubmit={onSubmit}>
-                <div class="flex flex-col gap">
-                    <label for="name" class="label text-sm">Name {item()?.productName}</label>
-                </div> <div class="flex flex-col gap">
-                    <label for="price" class="label text-sm">Price {item()?.productPrice}</label>
-                </div> <div class="flex flex-col gap">
-                    <label for="cost" class="label text-sm">Cost {item()?.productCost}</label>
-                </div>
-                <div class="flex flex-col gap">
-                    <label for="category" class="label text-sm">Category {item()?.productCategory}</label>
-                </div>
-                <div class="flex flex-col gap">
-                    <label for="quantity" class="label text-sm">Quantity</label>
-                    <input type="number" id="quantity" class="input input-bordered" value={quantity()} onInput={(e) => setQuantity(e.currentTarget.value)} />
-                </div>
-                <button class="btn btn-primary" type="submit" disabled={disabled()}>Save</button>
-            </form>
         </Layout>
     )
 }
