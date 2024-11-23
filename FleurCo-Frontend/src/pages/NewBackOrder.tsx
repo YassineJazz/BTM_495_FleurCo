@@ -1,8 +1,11 @@
 import { createEffect, createMemo, createResource, createSignal, For } from "solid-js"
 import Layout from "../components/Layout"
+import Modal from "../components/Modal";
 import { BackOrderRequest, createBackorder, getInventory, InventoryProduct } from "../utils/api"
 import { useNavigate } from "@solidjs/router";
 import { createStore } from "solid-js/store";
+import { render, Portal, MountableElement } from "solid-js/web";
+import Toast from "../components/Toast";
 
 interface SelectedItem {
     quantity: number,
@@ -51,6 +54,12 @@ export const NewBackOrder = () => {
             inventoryId: i.inventoryId
         }));
         await createBackorder(itemsToSend);
+        const portalId = document.getElementById("portal");
+        render(() => (
+            <Portal>
+                <Toast text={`Backorder successfully created`} duration={2500} />
+            </Portal>
+        ), portalId as MountableElement)
         navigate("/orders");
     }
 
@@ -81,7 +90,7 @@ export const NewBackOrder = () => {
         })));
     }
 
-    const goBack = () => {
+    const goBack = async () => {
         navigate("/orders");
     }
 
@@ -105,7 +114,12 @@ export const NewBackOrder = () => {
                     <div class="px-2 flex flex-col gap-4">
                         <div class="flex flex-row justify-between items-center gap-8">
                             <div class="flex flex-col gap-4 items-start">
-                                <button class="btn btn-sm btn-neutral" onClick={goBack}>Back</button>
+                                <Modal
+                                    btnClass="btn btn-sm btn-neutral"
+                                    btnText="Back"
+                                    confirmText={`Are you sure you want to go back? Any changes will not be saved`}
+                                    onSuccess={goBack}
+                                />
                                 <h1 class="text-2xl font-bold"> New Backorder </h1>
                             </div>
                             <p class="text-sm text-gray-500"> {selected.filter(i => i.selected).length} selected </p>
@@ -136,7 +150,7 @@ export const NewBackOrder = () => {
                                     <th>Cost</th>
                                     <th>Category</th>
                                     <th>Quantity</th>
-                                    <th>New Quantity</th>
+                                    <th>Quantity to Order</th>
                                 </tr>
                             </thead>
                             <tbody>

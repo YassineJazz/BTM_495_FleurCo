@@ -1,7 +1,10 @@
 import { useNavigate } from "@solidjs/router";
 import Layout from "../components/Layout";
+import Modal from "../components/Modal";
 import { createMemo, createSignal } from "solid-js";
 import { createProduct } from "../utils/api";
+import { render, Portal, MountableElement } from "solid-js/web";
+import Toast from "../components/Toast";
 
 const NewProductPage = () => {
     const navigate = useNavigate();
@@ -11,15 +14,20 @@ const NewProductPage = () => {
     const [cost, setCost] = createSignal("");
     const [category, setCategory] = createSignal("");
 
-    const goToProducts = () => {
+    const goBack = async () => {
         navigate("/products");
     }
 
     const onSubmit = async (e: Event) => {
         e.preventDefault();
-
         await createProduct(name(), parseInt(price()), parseInt(cost()), category());
-        goToProducts();
+        const portalId = document.getElementById("portal");
+        render(() => (
+            <Portal>
+                <Toast text={`${name()} successfully created`} duration={2500} />
+            </Portal>
+        ), portalId as MountableElement)
+        navigate("/products");
     }
 
     const disabled = createMemo(() => name() === "" || price() === "" || cost() === "" || category() === "");
@@ -42,7 +50,12 @@ const NewProductPage = () => {
 
                 <div class="flex flex-col gap-4 w-full items-start">
 
-                    <button class="btn btn-sm btn-neutral" onClick={goToProducts}>Back</button>
+                    <Modal
+                        btnClass="btn btn-sm btn-neutral"
+                        btnText="Back"
+                        confirmText={`Are you sure you want to go back? Any changes will not be saved`}
+                        onSuccess={goBack}
+                    />
                     <p class="text-2xl font-semibold">New Product</p>
                 </div>
                 <form class="flex flex-col gap-4 w-full h-full" onSubmit={onSubmit}>

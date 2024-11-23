@@ -1,7 +1,10 @@
 import { useNavigate, useParams } from "@solidjs/router";
 import Layout from "../components/Layout";
+import Modal from "../components/Modal";
 import { createEffect, createMemo, createResource, createSignal } from "solid-js";
 import { updateQuantity, InventoryProduct, getItem } from "../utils/api";
+import { render, Portal, MountableElement } from "solid-js/web";
+import Toast from "../components/Toast";
 
 const Item = () => {
     const params = useParams();
@@ -11,7 +14,7 @@ const Item = () => {
     const [quantity, setQuantity] = createSignal("");
 
 
-    const goBack = () => {
+    const goBack = async () => {
         navigate("/inventory");
     }
 
@@ -26,6 +29,12 @@ const Item = () => {
         e.preventDefault();
 
         await updateQuantity(params.inventoryId, parseInt(quantity()));
+        const portalId = document.getElementById("portal");
+        render(() => (
+            <Portal>
+                <Toast text={`${item()?.productName} successfully updated`} duration={2500} />
+            </Portal>
+        ), portalId as MountableElement);
         navigate("/inventory");
     }
 
@@ -47,8 +56,13 @@ const Item = () => {
                             </div>
                         </div>
                     </div>
-                    <div class="flex gap-4">
-                        <button class="btn btn-sm btn-neutral" onClick={goBack}>Back</button>
+                    <div class="flex flex-col gap-4 items-start">
+                        <Modal
+                            btnClass="btn btn-sm btn-neutral"
+                            btnText="Back"
+                            confirmText={`Are you sure you want to go back? Any changes will not be saved`}
+                            onSuccess={goBack}
+                        />
                         <p class="text-3xl font-semibold">Item info: {item()?.productName}</p>
                     </div>
                 </div>

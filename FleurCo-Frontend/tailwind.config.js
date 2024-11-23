@@ -3,7 +3,17 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   daisyui: {
     themes: [
-      "cupcake", "light", "pastel"]
+      {
+        pastel: {
+          ...require("daisyui/src/theming/themes")["pastel"],
+          "--rounded-btn": "0.75rem",
+          primary: "#abeaea",
+          secondary: "#abeaea",
+          neutral: "#abeaea"
+
+        }
+      },]
+
   },
   themes: {
     extend: {}
