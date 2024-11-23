@@ -34,7 +34,7 @@ export const Inventory = () => {
     return (
         <Layout>
             <div class="flex flex-col h-full w-full gap-4 p-4">
-                <div class="px-2 flex flex-col gap-2">
+                <div class="flex flex-col gap-2">
                     <h1 class="text-3xl font-bold"> FleurCo </h1>
                     <div class="flex flex-row justify-between items-center">
                         <h2 class="text-3xl font-semi-bold"> Inventory </h2>
