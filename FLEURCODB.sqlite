@@ -25,18 +25,6 @@ CREATE TABLE Customers (
     FOREIGN KEY (customer_id) REFERENCES Users(user_id)
 );
 
-CREATE TABLE Addresses (
-    address_id TEXT PRIMARY KEY UNIQUE,
-    street TEXT,
-    municipality TEXT,
-    province TEXT,
-    country TEXT,
-    postal_code TEXT,
-    address_type TEXT,
-    user_id INTEGER,
-    FOREIGN KEY (user_id) REFERENCES Users(user_id)
-);
-
 CREATE TABLE Orders (
     order_id TEXT PRIMARY KEY UNIQUE,
     order_date DATETIME NOT NULL DEFAULT (datetime('now')),
@@ -47,8 +35,8 @@ CREATE TABLE Orders (
 
 CREATE TABLE CustomerOrders (
     customerorder_id TEXT,
-    customer_id INTEGER,
-    whw_id INTEGER,
+    customer_id TEXT,
+    whw_id TEXT,
     FOREIGN KEY (neworder_id) REFERENCES Orders(order_id),
     FOREIGN KEY (customer_id) REFERENCES Users(user_id),
     FOREIGN KEY (whw_id) REFERENCES Users(user_id)
@@ -96,7 +84,7 @@ CREATE TABLE SalesForecasts (
     forecast_id TEXT PRIMARY KEY UNIQUE,
     start_date DATE,
     end_date DATE,
-    forecast_stock_level INTEGER,
-    product_id INTEGER,
+    forecast_stock_level REAL,
+    product_id TEXT,
     FOREIGN KEY (product_id) REFERENCES Products(product_id)
 );
