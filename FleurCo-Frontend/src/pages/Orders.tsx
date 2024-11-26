@@ -30,7 +30,7 @@ export const Orders = () => {
     };
     return (
         <Layout>
-            <div class="flex flex-col h-full w-full gap-4 p-4">
+            <div class="flex flex-col w-full gap-4 p-4">
                 <div class="flex flex-col gap-2">
                     <h1 class="text-3xl font-bold"> FleurCo </h1>
                     <div class="flex flex-row justify-between items-center">

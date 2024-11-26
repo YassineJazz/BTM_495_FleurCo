@@ -7,7 +7,7 @@ export const Layout: Component<ParentProps> = (props) => {
             <div class="p-4 bg-base-300 w-[250px]">
                 <Sidebar />
             </div>
-            <div class="w-full">
+            <div class="w-full h-full overflow-y-auto">
                 {props.children}
             </div>
         </div>

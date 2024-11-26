@@ -31,7 +31,7 @@ export const Products = () => {
 
     return (
         <Layout>
-            <div class="flex flex-col h-full w-full gap-4 p-4">
+            <div class="flex flex-col w-full gap-4 p-4">
                 <div class="flex flex-col gap-2">
                     <h1 class="text-3xl font-bold"> FleurCo </h1>
                     <div class="flex flex-row justify-between items-center">
@@ -64,7 +64,7 @@ export const Products = () => {
 
                 </div>
 
-                <div class="overflow-x-auto p-2 h-full">
+                <div class="overflow-x-auto p-2">
                     <table class="table">
                         <thead>
                             <tr>
@@ -75,7 +75,7 @@ export const Products = () => {
 
                             </tr>
                         </thead>
-                        <tbody class="overflow-y-auto">
+                        <tbody>
                             <For each={fileredProducts()}>
                                 {(product) => (
                                     <tr class="hover rounded-md focus:outline-none focus:ring focus:ring-base-content/20 focus:ring-offset-base-200 focus:ring-offset-2"
