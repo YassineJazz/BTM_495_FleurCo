@@ -83,8 +83,8 @@ export const Inventory = () => {
                                     >
                                         <td>{item.productName}</td>
                                         <td>{item.productCategory}</td>
-                                        <td>{item.productPrice}</td>
-                                        <td>{item.productCost}</td>
+                                        <td>{item.productPrice.toFixed(2)}</td>
+                                        <td>{item.productCost.toFixed(2)}</td>
                                         <td>{item.quantity}</td>
                                     </tr>
                                 )}

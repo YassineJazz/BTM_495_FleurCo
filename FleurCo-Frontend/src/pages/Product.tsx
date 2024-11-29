@@ -31,7 +31,12 @@ const ProductPage = () => {
 
     const onSubmit = async (e: Event) => {
         e.preventDefault();
-        await updateProduct(params.productId, name(), parseInt(price()), parseInt(cost()), category());
+        const decimalPrice = parseFloat(price());
+        const decimalCost = parseFloat(cost())
+        const formattedPrice = parseFloat(decimalPrice.toFixed(2));
+        const formattedCost = parseFloat(decimalCost.toFixed(2));
+
+        await updateProduct(params.productId, name(), formattedPrice, formattedCost, category());
         const portalId = document.getElementById("portal");
         render(() => (
             <Portal>
@@ -91,11 +96,11 @@ const ProductPage = () => {
                     </div>
                     <div class="flex flex-col gap">
                         <label for="price" class="label text-sm">Price</label>
-                        <input type="number" id="price" class="input input-bordered" value={price()} onInput={(e) => setPrice(e.currentTarget.value)} />
+                        <input type="number" step="0.01" id="price" class="input input-bordered" value={price()} onInput={(e) => setPrice(e.currentTarget.value)} />
                     </div>
                     <div class="flex flex-col gap">
                         <label for="cost" class="label text-sm">Cost</label>
-                        <input type="number" id="cost" class="input input-bordered" value={cost()} onInput={(e) => setCost(e.currentTarget.value)} />
+                        <input type="number" step="0.01" id="cost" class="input input-bordered" value={cost()} onInput={(e) => setCost(e.currentTarget.value)} />
                     </div>
                     <div class="flex flex-col gap">
                         <label for="category" class="label text-sm">Category</label>

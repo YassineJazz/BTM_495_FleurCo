@@ -86,8 +86,8 @@ export const Products = () => {
                                     >
                                         <td>{product.productName}</td>
                                         <td>{product.productCategory}</td>
-                                        <td>{product.productPrice}</td>
-                                        <td>{product.productCost}</td>
+                                        <td>{product.productPrice.toFixed(2)}</td>
+                                        <td>{product.productCost.toFixed(2)}</td>
 
                                     </tr>
                                 )}

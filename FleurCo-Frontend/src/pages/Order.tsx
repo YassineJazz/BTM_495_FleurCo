@@ -46,7 +46,7 @@ const OrderPage = () => {
                     </div><div class="flex flex-col items-start">
                         <label for="date" class="label gap-2"> <span class="font-bold"> Status: </span>{order()?.orderStatus}</label>
                     </div><div class="flex flex-col items-start">
-                        <label for="date" class="label gap-2"> <span class="font-bold"> Order Total: </span>{order()?.orderTotal}</label>
+                        <label for="date" class="label gap-2"> <span class="font-bold"> Order Total ($): </span>{order()?.orderTotal.toFixed(2)}</label>
                     </div>
 
                     <h1 class="text-lg font-semibold"> Products in this order: </h1>
@@ -70,8 +70,8 @@ const OrderPage = () => {
                                         >
                                             <td>{product.productName}</td>
                                             <td>{product.productQty}</td>
-                                            <td>{product.productPrice}</td>
-                                            <td>{product.productCost}</td>
+                                            <td>{product.productPrice.toFixed(2)}</td>
+                                            <td>{product.productCost.toFixed(2)}</td>
                                             <td>{product.productCategory}</td>
 
                                         </tr>

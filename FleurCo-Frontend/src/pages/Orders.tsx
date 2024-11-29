@@ -70,7 +70,7 @@ export const Orders = () => {
                                 <th>Date</th>
                                 <th>Type</th>
                                 <th>Status</th>
-                                <th>Order Total</th>
+                                <th>Order Total ($)</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -85,7 +85,7 @@ export const Orders = () => {
                                         <td>{convertToEasternTime(order.orderDate)}</td>
                                         <td>{order.orderType}</td>
                                         <td>{order.orderStatus}</td>
-                                        <td>{order.orderTotal}</td>
+                                        <td>{order.orderTotal.toFixed(2)}</td>
                                     </tr>
                                 )}
                             </For>

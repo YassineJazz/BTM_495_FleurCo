@@ -162,8 +162,8 @@ export const NewBackOrder = () => {
                                                 <input type="checkbox" class="checkbox checkbox-primary" onChange={(e) => onCheckboxChange(e, item.inventoryId)} checked={selected.find(i => i.inventoryId === item.inventoryId)?.selected} />
                                             </td>
                                             <td>{item.productName}</td>
-                                            <td>{item.productPrice}</td>
-                                            <td>{item.productCost}</td>
+                                            <td>{item.productPrice.toFixed(2)}</td>
+                                            <td>{item.productCost.toFixed(2)}</td>
                                             <td>{item.productCategory}</td>
                                             <td>{item.quantity}</td>
                                             <td>

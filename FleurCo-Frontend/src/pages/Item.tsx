@@ -68,14 +68,14 @@ const Item = () => {
                 </div>
                 <form class="flex flex-col gap-4 w-full h-full" onSubmit={onSubmit}>
                     <div class="flex flex-col gap">
-                        <label for="name" class="label text-sm">Name {item()?.productName}</label>
+                        <label for="name" class="label text-sm">Name: {item()?.productName}</label>
                     </div> <div class="flex flex-col gap">
-                        <label for="price" class="label text-sm">Price {item()?.productPrice}</label>
+                        <label for="price" class="label text-sm">Price ($): {item()?.productPrice.toFixed(2)}</label>
                     </div> <div class="flex flex-col gap">
-                        <label for="cost" class="label text-sm">Cost {item()?.productCost}</label>
+                        <label for="cost" class="label text-sm">Cost ($): {item()?.productCost.toFixed(2)}</label>
                     </div>
                     <div class="flex flex-col gap">
-                        <label for="category" class="label text-sm">Category {item()?.productCategory}</label>
+                        <label for="category" class="label text-sm">Category: {item()?.productCategory}</label>
                     </div>
                     <div class="flex flex-col gap">
                         <label for="quantity" class="label text-sm">Quantity</label>
